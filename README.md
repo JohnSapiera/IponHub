@@ -58,3 +58,8 @@ git clone [https://github.com/yourusername/your-repo-name.git](https://github.co
 cd your-repo-name
 npm install
 npm start
+
+## 🗂 Project Structure
+- `/database`: Contains the SQL schema for users, wallets, and contracts.
+- `/docs`: System flowcharts and business logic documentation.
+- `/frontend`: (Coming Soon) React-based dashboard for users.
