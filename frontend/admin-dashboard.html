@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel | IponHub Control</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen font-sans">
+
+    <div class="flex flex-col md:flex-row shadow-2xl">
+        <aside class="w-full md:w-64 bg-slate-800 p-6 border-r border-slate-700">
+            <h1 class="text-2xl font-black text-green-500 mb-8 tracking-tighter italic">IPONHUB ADMIN</h1>
+            <nav class="space-y-4">
+                <a href="#" class="block bg-slate-700 p-3 rounded-xl font-bold border-l-4 border-green-500">📊 Overview</a>
+                <a href="#" class="block p-3 text-slate-400 hover:bg-slate-700 rounded-xl transition">👥 User Management</a>
+                <a href="#" class="block p-3 text-slate-400 hover:bg-slate-700 rounded-xl transition">📑 Pending Contracts</a>
+                <a href="#" class="block p-3 text-slate-400 hover:bg-slate-700 rounded-xl transition">📱 Load Requests</a>
+            </nav>
+        </aside>
+
+        <main class="flex-1 p-6 md:p-10">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+                <div class="bg-slate-800 p-6 rounded-3xl border border-slate-700">
+                    <p class="text-slate-400 text-sm">Total Members</p>
+                    <h2 class="text-3xl font-bold mt-1">1,204</h2>
+                </div>
+                <div class="bg-slate-800 p-6 rounded-3xl border border-slate-700">
+                    <p class="text-slate-400 text-sm">Active Investors (Plus)</p>
+                    <h2 class="text-3xl font-bold mt-1 text-green-400">458</h2>
+                </div>
+                <div class="bg-slate-800 p-6 rounded-3xl border border-slate-700">
+                    <p class="text-slate-400 text-sm">Pending Load Requests</p>
+                    <h2 class="text-3xl font-bold mt-1 text-yellow-400">12</h2>
+                </div>
+                <div class="bg-slate-800 p-6 rounded-3xl border border-slate-700">
+                    <p class="text-slate-400 text-sm">Total Inflow (PHP)</p>
+                    <h2 class="text-3xl font-bold mt-1 text-blue-400">₱45,800</h2>
+                </div>
+            </div>
+
+            <div class="bg-slate-800 rounded-3xl border border-slate-700 overflow-hidden">
+                <div class="p-6 border-b border-slate-700 flex justify-between items-center">
+                    <h3 class="font-bold text-lg">Recent User Activity</h3>
+                    <button class="text-xs bg-slate-700 px-3 py-1 rounded-lg">View All</button>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead class="bg-slate-700/50 text-slate-400 text-xs uppercase tracking-widest">
+                            <tr>
+                                <th class="p-4">User / Mobile</th>
+                                <th class="p-4">Status</th>
+                                <th class="p-4">Invited By</th>
+                                <th class="p-4">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-700">
+                            <tr>
+                                <td class="p-4">
+                                    <p class="font-bold">Juan Dela Cruz</p>
+                                    <p class="text-xs text-slate-500">09171234567</p>
+                                </td>
+                                <td class="p-4"><span class="bg-green-900/30 text-green-400 px-3 py-1 rounded-full text-xs font-bold">PLUS</span></td>
+                                <td class="p-4 text-sm text-slate-400">REF-9981</td>
+                                <td class="p-4">
+                                    <button class="bg-blue-600 hover:bg-blue-700 text-xs px-3 py-1 rounded-lg">Details</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="p-4">
+                                    <p class="font-bold">Maria Santos</p>
+                                    <p class="text-xs text-slate-500">09228887766</p>
+                                </td>
+                                <td class="p-4"><span class="bg-slate-700 text-slate-400 px-3 py-1 rounded-full text-xs font-bold">FREE</span></td>
+                                <td class="p-4 text-sm text-slate-400">REF-1234</td>
+                                <td class="p-4 text-xs text-slate-500 italic italic">No action needed</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+</body>
+</html>
