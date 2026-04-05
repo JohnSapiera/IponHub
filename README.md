@@ -39,3 +39,26 @@ Once a user upgrades to **VIP Saver**, they can commit their credits into time-l
 ---
 
 ##
+
+# 📄 IponHub Terms of Service (ToS)
+*Huling Update: April 2026*
+
+Welcome sa IponHub! Ang aming layunin ay tulungan kang mag-ipon nang may disiplina at rewards. Sa pag-gamit ng aming app, sumasang-ayon ka sa mga sumusunod na simple rules:
+
+### 1. 👤 Isang Account Lang
+Isang (1) account lang bawat tao. Ang pag-gawa ng maraming "dummy accounts" para mandaya sa Referral System o Rewards ay magreresulta sa pag-lock ng iyong account.
+
+### 2. 💎 Credits & Perks
+Ang mga Credits sa loob ng IponHub ay ginagamit para sa Saving Challenges. Ang mga "PERKS" (Mobile Load) ay maaring i-redeem kapag nakumpleto ang required cycle. 
+
+### 3. 🤝 Buddy Code (Referrals)
+Bawal ang "spamming" ng Buddy Codes sa mga hindi kakilala o sa mga public groups na bawal ang ads. Gamitin ang system nang maayos at may respeto.
+
+### 4. 🔒 Account Security
+Ikaw ang responsable sa iyong Password at Email. Huwag ipamigay ang iyong login details sa kahit kanino. Ang IponHub ay hinding-hindi hihingi ng iyong password.
+
+### 5. 🛡️ Data Privacy
+Ang iyong Pangalan, Email, at Mobile Number ay gagamitin lamang para sa account verification at pag-process ng iyong Load Rewards. Hindi namin ito ibebenta sa iba.
+
+---
+**"Save Smart, Grow Fast with IponHub!"**
