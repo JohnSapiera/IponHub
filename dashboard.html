@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IponHub | My Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="cover-area" id="cebu-sky"></div>
+
+    <div class="mini-tablet">
+        <div class="tablet-screen">
+            <div class="brand-name">
+                Ipon<span style="color:var(--logo-red)">H</span><span style="color:var(--logo-yellow)">u</span><span style="color:var(--logo-blue)">b</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="iphone-frame">
+        <div class="white-stroke">
+            <div class="neon-inner-stroke">
+                <div class="dashboard-content">
+                    
+                    <div class="wallet-wrap">
+                        <div class="balance-header">
+                            <div class="balance-info">
+                                <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Current Balance</p>
+                                <h1 class="balance-amount"><span>₱</span>12,540.00</h1>
+                            </div>
+                            <div class="refresh-circle" onclick="location.reload()">
+                                <span class="text-green-600 font-bold">↻</span>
+                            </div>
+                        </div>
+
+                        <div class="action-group">
+                            <button onclick="openModal('cashinModal')" class="btn-dash btn-cashin shadow-lg">Cash In</button>
+                            <button class="btn-dash btn-withdraw">Withdrawal</button>
+                        </div>
+                    </div>
+
+                    <div onclick="openModal('prospectingModal')" class="scan-group flex flex-col items-start group cursor-pointer mt-8 ml-2">
+                        <div class="relative w-16 h-16 flex items-center justify-center">
+                            <div class="paper-bg" style="width: 35px; height: 45px;">
+                                <div class="paper-line w-6"></div>
+                                <div class="paper-line w-4"></div>
+                                <div class="paper-line w-7"></div>
+                            </div>
+                            <div class="magnifier">
+                                <div class="glass"></div>
+                                <div class="handle"></div>
+                            </div>
+                        </div>
+                        <p class="text-[9px] font-black text-gray-400 mt-2 uppercase tracking-widest group-hover:text-green-500">Prospecting</p>
+                    </div>
+
+                    <div class="divider-container my-7">
+                        <div class="thin-gray-line"></div>
+                        <div class="thin-gray-line mt-[2px]"></div>
+                    </div>
+
+                    <div class="mt-auto pb-6 opacity-30 text-center">
+                        <div class="w-16 h-1.5 bg-gray-400 rounded-full mx-auto"></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="cashinModal">
+        <div class="modal-box">
+            <span class="absolute right-6 top-6 text-2xl text-gray-300 cursor-pointer" onclick="closeModal('cashinModal')">&times;</span>
+            <h2 class="text-center font-black text-gray-800 mb-5 tracking-tight">GCASH CASH IN</h2>
+            <div class="qr-placeholder" style="width: 150px; height: 150px; margin: 0 auto; border: 2px dashed #ddd; border-radius: 15px; overflow: hidden;">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=JeromeIponHub" alt="QR" class="w-full h-full object-cover">
+            </div>
+            <p class="text-center text-[11px] font-bold text-gray-600 mt-2">Jer*****on V.</p>
+            <div class="mt-6 space-y-4">
+                <div class="relative">
+                    <label class="text-[10px] font-bold text-gray-400 uppercase ml-2">GCash Number</label>
+                    <input type="number" id="gcashNum" class="input-field" placeholder="09123456789" oninput="validateForm()">
+                </div>
+                <div id="amountGroup" class="hidden">
+                    <label class="text-[10px] font-bold text-gray-400 uppercase ml-2">Amount (₱)</label>
+                    <input type="number" id="amountVal" class="input-field" placeholder="0.00" oninput="validateForm()">
+                </div>
+                <div id="refGroup" class="hidden">
+                    <label class="text-[10px] font-bold text-gray-400 uppercase ml-2">Reference Number</label>
+                    <input type="text" id="refNum" class="input-field" placeholder="13-digit Ref #" oninput="validateForm()">
+                </div>
+                <div class="flex gap-1.5 mt-5">
+                    <div id="bar1" class="bar"></div>
+                    <div id="bar2" class="bar"></div>
+                    <div id="bar3" class="bar"></div>
+                    <span id="stepText" class="text-[10px] font-black text-gray-300 ml-2">0/3</span>
+                </div>
+                <button id="submitBtn" class="btn-submit" onclick="confirmPayment()">SUBMIT</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="prospectingModal">
+        <div class="modal-box">
+            <span class="absolute right-6 top-6 text-2xl text-gray-300 cursor-pointer" onclick="closeModal('prospectingModal')">&times;</span>
+            <div class="text-center mb-6">
+                <h2 class="font-bold text-gray-800 text-lg uppercase tracking-widest">Prospecting</h2>
+                <div class="w-12 h-1 bg-green-500 mx-auto mt-1 rounded-full"></div>
+            </div>
+            <div class="mb-4 text-left">
+                <div class="thought-bubble uppercase">New Deals</div>
+            </div>
+            <div class="max-h-[300px] overflow-y-auto pr-1">
+                <div class="glass-oblong">
+                    <p class="deal-title">Project: Sari-Sari Store Expansion</p>
+                    <p class="deal-sub">Location: Talisay City, Cebu</p>
+                    <p class="deal-status">● Potential Profit: 15% Monthly</p>
+                </div>
+                </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
