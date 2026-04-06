@@ -17,18 +17,56 @@
             --logo-blue: #4285F4;
             --neon-blue: #00E5FF;
             --neon-red: #FF3D00;
+            --cloud-shadow: rgba(129, 212, 250, 0.6);
         }
 
         body { font-family: 'Inter', sans-serif; background-color: var(--white); min-height: 100vh; display: flex; flex-direction: column; align-items: center; margin: 0; overflow-x: hidden; }
 
-        .cover-area { width: 100%; height: 140px; position: relative; z-index: 1; background: linear-gradient(180deg, #40C4FF 0%, #B3E5FC 100%); transition: background 1.5s ease; }
+        /* 🌦️ WEATHER SYSTEM COVER */
+        .cover-area { 
+            width: 100%; height: 140px; position: relative; z-index: 1; 
+            background: linear-gradient(180deg, #40C4FF 0%, #B3E5FC 100%); 
+            transition: background 1.5s ease; overflow: hidden;
+            border-bottom: 3px solid var(--white);
+        }
 
-        .mini-tablet { background: #1A1A1A; width: 125px; height: 75px; border-radius: 14px; padding: 5px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); position: relative; z-index: 10; margin-top: -38px; }
-        .tablet-screen { background: var(--white); width: 100%; height: 100%; border-radius: 10px; display: flex; justify-content: center; align-items: center; position: relative; overflow: hidden; }
-        .brand-name { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 20px; letter-spacing: -1.2px; color: var(--brand-green); position: relative; }
-        .brand-name::after { content: ''; position: absolute; top: 0; left: -150%; width: 50%; height: 100%; background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0) 100%); transform: skewX(-25deg); animation: shimmer 3s infinite; }
-        @keyframes shimmer { 0% { left: -150%; } 30% { left: 150%; } 100% { left: 150%; } }
+        .lightning-flash { position: absolute; width: 100%; height: 100%; background: white; opacity: 0; z-index: 10; pointer-events: none; }
+        @keyframes flashAnim { 0% { opacity: 0; } 10% { opacity: 0.8; } 15% { opacity: 0; } 20% { opacity: 0.7; } 25% { opacity: 0; } }
 
+        .rain-layer { position: absolute; width: 100%; height: 100%; z-index: 2; display: none; }
+        .rain-layer.active { display: block; }
+        .rain-layer::before {
+            content: ''; position: absolute; width: 100%; height: 100%;
+            background-image: linear-gradient(to bottom, rgba(255,255,255,0.2) 15%, transparent 15%);
+            background-size: 2px 25px; animation: rainDrop 0.15s linear infinite;
+        }
+        @keyframes rainDrop { from { transform: translateY(-25px); } to { transform: translateY(25px); } }
+
+        .vector-cloud {
+            position: absolute; background: var(--white); border-radius: 50px;
+            box-shadow: inset 0 -15px 0 var(--cloud-shadow); animation: vectorMove var(--speed) linear infinite;
+        }
+        .vector-cloud::before, .vector-cloud::after { content: ''; position: absolute; background: inherit; border-radius: 50%; box-shadow: inherit; }
+        .v1 { width: 180px; height: 60px; top: 15%; --speed: 35s; left: -200px; }
+        .v1::before { width: 90px; height: 90px; top: -50px; left: 30px; }
+        .v1::after { width: 70px; height: 70px; top: -30px; right: 20px; }
+        @keyframes vectorMove { from { transform: translateX(-100px); } to { transform: translateX(calc(100vw + 300px)); } }
+
+        /* 📱 TABLET LANDSCAPE */
+        .mini-tablet { background: #1A1A1A; width: 135px; height: 80px; border-radius: 14px; padding: 5px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); position: relative; z-index: 10; margin-top: -40px; }
+        .tablet-screen { background: var(--white); width: 100%; height: 100%; border-radius: 10px; display: flex; justify-content: center; align-items: center; position: relative; overflow: hidden; border: 0.5px solid #000; }
+        
+        .brand-wrapper { position: relative; display: inline-block; }
+        .brand-name { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 22px; letter-spacing: -1.5px; color: var(--brand-green); position: relative; z-index: 1; }
+        
+        .shine-overlay { 
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2; mix-blend-mode: overlay; 
+            background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 50%, rgba(255,255,255,0) 100%); 
+            background-size: 200% 100%; animation: brandShine 3s ease-in-out infinite; 
+        }
+        @keyframes brandShine { 0% { background-position: 200% 0; } 45% { background-position: -100% 0; } 100% { background-position: -100% 0; } }
+
+        /* 📱 IPHONE FRAME & DASHBOARD CONTENT */
         .iphone-frame { width: 92%; max-width: 360px; margin-top: 20px; padding: 4px; background: var(--neon-green); border-radius: 50px; box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.15); position: relative; animation: float 5s ease-in-out infinite; }
         .white-stroke { background: var(--white); padding: 2px; border-radius: 47px; }
         .neon-inner-stroke { background: var(--neon-green); padding: 2px; border-radius: 45px; }
@@ -44,21 +82,20 @@
         .btn-cashin { background: var(--brand-green); color: white; }
         .btn-withdraw { border: 2.5px solid var(--brand-green); color: var(--brand-green); }
 
-        /* 🔍 PROSPECTING ICON */
+        /* 🔍 ICONS */
         .paper-bg { width: 35px; height: 45px; background: white; border: 1.5px solid #ddd; border-radius: 5px; padding: 8px; display: flex; flex-direction: column; gap: 4px; transform: rotate(-5deg); transition: 0.3s; }
         .paper-line { height: 2px; background: #eee; border-radius: 2px; }
         .magnifier { position: absolute; bottom: 0px; right: 0px; transform: scale(0.8); transition: 0.4s; }
         .glass { width: 35px; height: 35px; border: 3px solid var(--brand-green); background: rgba(57, 255, 20, 0.1); border-radius: 50%; }
         .handle { width: 4px; height: 12px; background: var(--brand-green); margin-left: 28px; margin-top: -2px; transform: rotate(-45deg); border-radius: 4px; }
 
-        /* 🪙 DEALS ICON */
         .coin-icon { width: 50px; height: 50px; background: #FBBC05; border-radius: 50%; border: 3px dashed #B8860B; display: flex; justify-content: center; align-items: center; transition: 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         .coin-icon:hover { transform: rotate(360deg) scale(1.1); }
         .peso-sign { font-weight: 900; color: #8B4513; font-size: 22px; }
 
         /* 📦 MODALS */
         .modal-box { background: white; width: 100%; max-width: 340px; border-radius: 40px; padding: 30px 25px; position: relative; border: 3px solid var(--neon-green); }
-        .glass-oblong, .glass-4d-deal { background: rgba(0, 0, 0, 0.03); border: 1px solid rgba(0, 0, 0, 0.05); border-radius: 20px; padding: 15px; margin-bottom: 12px; }
+        .glass-oblong { background: rgba(0, 0, 0, 0.03); border: 1px solid rgba(0, 0, 0, 0.05); border-radius: 20px; padding: 15px; margin-bottom: 12px; }
         .thought-bubble { background: var(--neon-green); color: #000; padding: 5px 12px; border-radius: 15px 15px 15px 2px; font-size: 11px; font-weight: 800; animation: blinker 1.5s linear infinite; }
         @keyframes blinker { 50% { opacity: 0.3; } }
 
@@ -73,11 +110,24 @@
 </head>
 <body>
 
-    <div class="cover-area" id="cebu-sky"></div>
+    <div class="cover-area" id="cebu-sky">
+        <div class="lightning-flash" id="lightning"></div>
+        <div class="rain-layer" id="rain"></div>
+        <div id="cloud-container">
+            <div class="vector-cloud v1"></div>
+            <div class="vector-cloud v1" style="animation-delay: -12s; top: 38%; opacity: 0.7;"></div>
+            <div class="vector-cloud v1" style="animation-delay: -22s; top: 10%; opacity: 0.5; transform: scale(0.6);"></div>
+        </div>
+    </div>
 
     <div class="mini-tablet">
         <div class="tablet-screen">
-            <div class="brand-name">Ipon<span style="color:var(--logo-red)">H</span><span style="color:var(--logo-yellow)">u</span><span style="color:var(--logo-blue)">b</span></div>
+            <div class="brand-wrapper">
+                <div class="brand-name">
+                    Ipon<span style="color:var(--logo-red)">H</span><span style="color:var(--logo-yellow)">u</span><span style="color:var(--logo-blue)">b</span>
+                </div>
+                <div class="shine-overlay"></div>
+            </div>
         </div>
     </div>
 
@@ -147,67 +197,64 @@
     </div>
 
     <div id="prospectingModal" class="fixed inset-0 z-[100] hidden bg-black/50 backdrop-blur-sm items-center justify-center p-5">
-    <div class="modal-box">
-        <span class="absolute right-6 top-6 text-2xl text-gray-300 cursor-pointer" onclick="closeModal('prospectingModal')">&times;</span>
-        <div class="text-center mb-6">
-            <h2 class="font-bold text-gray-800 text-lg uppercase tracking-widest">Prospecting</h2>
-            <div class="w-12 h-1 bg-green-500 mx-auto mt-1 rounded-full"></div>
-        </div>
-        <div class="thought-bubble uppercase mb-4">New Deals Found</div>
-        
-        <div class="max-h-[300px] overflow-y-auto pr-1 space-y-3">
-            <div class="glass-oblong">
-                <p class="deal-title">Project: Sari-Sari Store Expansion</p>
-                <p class="deal-sub">Location: Talisay City, Cebu</p>
-                <p class="deal-status">● Potential Profit: 15% Monthly</p>
+        <div class="modal-box">
+            <span class="absolute right-6 top-6 text-2xl text-gray-300 cursor-pointer" onclick="closeModal('prospectingModal')">&times;</span>
+            <div class="text-center mb-6">
+                <h2 class="font-bold text-gray-800 text-lg uppercase tracking-widest">Prospecting</h2>
+                <div class="w-12 h-1 bg-green-500 mx-auto mt-1 rounded-full"></div>
             </div>
-            <div class="glass-oblong">
-                <p class="deal-title">Asset: Water Refilling Station</p>
-                <p class="deal-sub">Location: Minglanilla, Cebu</p>
-                <p class="deal-status">● Potential Profit: 12% Monthly</p>
-            </div>
-            <div class="glass-oblong">
-                <p class="deal-title">Project: E-Bike Rental Hub</p>
-                <p class="deal-sub">Location: Cebu City (IT Park)</p>
-                <p class="deal-status">● Potential Profit: 20% Monthly</p>
+            <div class="thought-bubble uppercase mb-4">New Deals Found</div>
+            <div class="max-h-[300px] overflow-y-auto pr-1 space-y-3">
+                <div class="glass-oblong">
+                    <p class="font-bold text-gray-700">Project: Sari-Sari Store Expansion</p>
+                    <p class="text-[10px] text-gray-500">Location: Talisay City, Cebu</p>
+                    <p class="text-[11px] text-green-600 font-bold mt-1">● Potential Profit: 15% Monthly</p>
+                </div>
+                <div class="glass-oblong">
+                    <p class="font-bold text-gray-700">Asset: Water Refilling Station</p>
+                    <p class="text-[10px] text-gray-500">Location: Minglanilla, Cebu</p>
+                    <p class="text-[11px] text-green-600 font-bold mt-1">● Potential Profit: 12% Monthly</p>
+                </div>
+                <div class="glass-oblong">
+                    <p class="font-bold text-gray-700">Project: E-Bike Rental Hub</p>
+                    <p class="text-[10px] text-gray-500">Location: Cebu City (IT Park)</p>
+                    <p class="text-[11px] text-green-600 font-bold mt-1">● Potential Profit: 20% Monthly</p>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
     <div id="dealsModal" class="fixed inset-0 z-[100] hidden bg-black/50 backdrop-blur-sm items-center justify-center p-5">
-    <div class="modal-box">
-        <span class="absolute right-6 top-6 text-2xl text-gray-300 cursor-pointer" onclick="closeModal('dealsModal')">&times;</span>
-        <div class="text-center mb-4">
-            <h2 class="font-bold text-gray-800 text-lg uppercase tracking-widest">My Deals</h2>
-            <div class="thin-gray-line mt-2"></div>
+        <div class="modal-box">
+            <span class="absolute right-6 top-6 text-2xl text-gray-300 cursor-pointer" onclick="closeModal('dealsModal')">&times;</span>
+            <div class="text-center mb-4">
+                <h2 class="font-bold text-gray-800 text-lg uppercase tracking-widest">My Deals</h2>
+                <div class="thin-gray-line mt-2"></div>
+            </div>
+            <p class="text-[10px] font-bold text-gray-400 mb-4 uppercase">Active Deals</p>
+            <div class="max-h-[280px] overflow-y-auto px-1 space-y-3">
+                <div class="glass-oblong">
+                    <p class="font-bold text-gray-700">Deal #001: Rice Wholesale</p>
+                    <p class="text-[10px] text-gray-500">Inventory: 50 Sacks</p>
+                    <p class="text-[11px] text-blue-600 font-bold mt-1">● View Contract</p>
+                </div>
+                <div class="glass-oblong">
+                    <p class="font-bold text-gray-700">Deal #002: LPG Express</p>
+                    <p class="text-[10px] text-gray-500">Regasco Partner Deal</p>
+                    <p class="text-[11px] text-blue-500 font-bold mt-1">● Verifying Documents</p>
+                </div>
+                <div class="glass-oblong">
+                    <p class="font-bold text-gray-700">Deal #003: GCash Hub</p>
+                    <p class="text-[10px] text-gray-500">Daily Cash-out Service</p>
+                    <p class="text-[11px] text-yellow-600 font-bold mt-1">● Pending Funds</p>
+                </div>
+            </div>
+            <button class="w-full mt-6 py-4 rounded-2xl font-black text-[12px] tracking-widest uppercase" 
+                    style="background: #FF3D00; color: white; box-shadow: 0 0 20px rgba(255, 61, 0, 0.4);">
+                ARCHIVES
+            </button>
         </div>
-        <p class="text-[10px] font-bold text-gray-400 mb-4 uppercase">Active Deals</p>
-        
-        <div class="max-h-[280px] overflow-y-auto px-1 space-y-3">
-            <div class="glass-oblong cursor-pointer" onclick="openModal('contractModal')">
-                <p class="deal-title">Deal #001: Rice Wholesale</p>
-                <p class="deal-sub">Inventory: 50 Sacks</p>
-                <p class="deal-status">● View Contract</p>
-            </div>
-            <div class="glass-oblong cursor-pointer" onclick="openModal('contractModal')">
-                <p class="deal-title">Deal #002: LPG Express</p>
-                <p class="deal-sub">Regasco Partner Deal</p>
-                <p class="deal-status" style="color: #4285F4;">● Verifying Documents</p>
-            </div>
-            <div class="glass-oblong cursor-pointer" onclick="openModal('contractModal')">
-                <p class="deal-title">Deal #003: GCash Hub</p>
-                <p class="deal-sub">Daily Cash-out Service</p>
-                <p class="deal-status" style="color: #FBBC05;">● Pending Funds</p>
-            </div>
-        </div>
-
-        <button class="w-full mt-6 py-4 rounded-2xl font-black text-[12px] tracking-widest uppercase transition-transform active:scale-95" 
-                style="background: #FF3D00; color: white; border: none; box-shadow: 0 0 20px rgba(255, 61, 0, 0.6);">
-            ARCHIVES
-        </button>
     </div>
-</div>
 
     <script>
         function openModal(id) { document.getElementById(id).classList.remove('hidden'); document.getElementById(id).classList.add('flex'); }
@@ -240,10 +287,39 @@
 
         function confirmPayment() { alert("✅ Payment Successful!"); closeModal('cashinModal'); }
 
-        // Weather Sky Background
-        const sky = document.getElementById('cebu-sky'), hr = new Date().getHours();
-        if (hr >= 18 || hr < 5) sky.style.background = "linear-gradient(180deg, #0B0E14 0%, #1A237E 100%)";
-        else if (hr >= 16 && hr < 18) sky.style.background = "linear-gradient(180deg, #E64A19 0%, #FFB74D 100%)";
+        // 🌦️ WEATHER SYSTEM SYNC
+        async function updateWeather() {
+            const sky = document.getElementById('cebu-sky');
+            const rain = document.getElementById('rain');
+            const lightning = document.getElementById('lightning');
+            
+            const hour = new Date().getHours();
+            let isNight = (hour >= 18 || hour < 5);
+            let isSunset = (hour >= 16 && hour < 18);
+
+            if (isNight) sky.style.background = "linear-gradient(180deg, #0B0E14 0%, #1A237E 100%)";
+            else if (isSunset) sky.style.background = "linear-gradient(180deg, #E64A19 0%, #FFB74D 100%)";
+            else sky.style.background = "linear-gradient(180deg, #40C4FF 0%, #B3E5FC 100%)";
+
+            try {
+                const resp = await fetch('https://api.openweathermap.org/data/2.5/weather?q=Cebu&appid=da0650965e6d628f844b24131df33246');
+                const data = await resp.json();
+                const condition = data.weather[0].main; 
+
+                if (condition === 'Rain' || condition === 'Drizzle' || condition === 'Thunderstorm') {
+                    rain.classList.add('active');
+                    if(condition === 'Thunderstorm') {
+                        setInterval(() => { 
+                            if (Math.random() > 0.8) { 
+                                lightning.style.animation = 'flashAnim 0.4s ease-out'; 
+                                setTimeout(() => lightning.style.animation = '', 400); 
+                            } 
+                        }, 5000);
+                    }
+                }
+            } catch (e) { console.log("Weather Offline"); }
+        }
+        updateWeather();
     </script>
 </body>
 </html>
