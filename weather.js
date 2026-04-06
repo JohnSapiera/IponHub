@@ -27,18 +27,39 @@ async function updateWeather() {
         const data      = await resp.json();
         const condition = data.weather[0].main;
 
-        if (condition === 'Rain' || condition === 'Drizzle' || condition === 'Thunderstorm') {
+        if (condition === 'Rain' || condition === 'Drizzle') {
+            // Light to moderate rain — blue sky + rain only
             rain.classList.add('active');
-
-            if (condition === 'Thunderstorm') {
-                setInterval(() => {
-                    if (Math.random() > 0.8) {
-                        lightning.style.animation = 'flashAnim 0.4s ease-out';
-                        setTimeout(() => lightning.style.animation = '', 400);
-                    }
-                }, 5000);
-            }
         }
+
+        if (condition === 'Thunderstorm') {
+            // Bagyo mode — dark sky + heavy rain + lightning
+            sky.style.transition = "background 2s ease";
+            sky.style.background = "linear-gradient(180deg, #263238 0%, #37474F 100%)";
+            rain.classList.add('active');
+            rain.style.opacity = "1.8";
+
+            // Dramatic lightning — every 3 seconds
+            setInterval(() => {
+                const chance = Math.random();
+
+                if (chance > 0.6) {
+                    // Single flash
+                    lightning.style.animation = 'flashAnim 0.4s ease-out';
+                    setTimeout(() => lightning.style.animation = '', 400);
+                }
+
+                if (chance > 0.85) {
+                    // Double flash — mas dramatic
+                    setTimeout(() => {
+                        lightning.style.animation = 'flashAnim 0.3s ease-out';
+                        setTimeout(() => lightning.style.animation = '', 300);
+                    }, 500);
+                }
+
+            }, 3000);
+        }
+
     } catch (e) {
         console.log("Weather Offline");
     }
