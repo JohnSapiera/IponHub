@@ -1,32 +1,37 @@
-/* IponHub Weather Engine - Zero UI Conflict */
-async function syncIponHubWeather() {
-    const sky = document.getElementById('cebu-sky');
-    const rain = document.getElementById('rain');
+/* ============================================
+   weather.js
+   IponHub — Weather System (Time + OpenWeather)
+   ============================================ */
+
+async function updateWeather() {
+    const sky       = document.getElementById('cebu-sky');
+    const rain      = document.getElementById('rain');
     const lightning = document.getElementById('lightning');
-    if (!sky) return;
 
-    const hour = new Date().getHours();
-    
-    // 1. Oras lang ang binabago sa Background
-    sky.classList.remove('sky-day', 'sky-sunset', 'sky-night');
-    if (hour >= 18 || hour < 5) sky.classList.add('sky-night');
-    else if (hour >= 16 && hour < 18) sky.classList.add('sky-sunset');
-    else sky.classList.add('sky-day');
+    // Time-based sky color
+    const hour     = new Date().getHours();
+    const isNight  = (hour >= 18 || hour < 5);
+    const isSunset = (hour >= 16 && hour < 18);
 
-    // 2. Weather Sync (Rain/Lightning)
+    if (isNight) {
+        sky.style.background = "linear-gradient(180deg, #0B0E14 0%, #1A237E 100%)";
+    } else if (isSunset) {
+        sky.style.background = "linear-gradient(180deg, #E64A19 0%, #FFB74D 100%)";
+    } else {
+        sky.style.background = "linear-gradient(180deg, #40C4FF 0%, #B3E5FC 100%)";
+    }
+
+    // Live weather from OpenWeather
     try {
-        const res = await fetch('https://api.openweathermap.org/data/2.5/weather?q=Cebu&appid=da0650965e6d628f844b24131df33246');
-        const data = await res.json();
-        const main = data.weather[0].main;
+        const resp      = await fetch('https://api.openweathermap.org/data/2.5/weather?q=Cebu&appid=da0650965e6d628f844b24131df33246');
+        const data      = await resp.json();
+        const condition = data.weather[0].main;
 
-        if (rain) {
-            (main === 'Rain' || main === 'Drizzle' || main === 'Thunderstorm') 
-            ? rain.classList.add('active') : rain.classList.remove('active');
-        }
+        if (condition === 'Rain' || condition === 'Drizzle' || condition === 'Thunderstorm') {
+            rain.classList.add('active');
 
-        if (main === 'Thunderstorm' && lightning) {
-            if (!window.lgtInterval) {
-                window.lgtInterval = setInterval(() => {
+            if (condition === 'Thunderstorm') {
+                setInterval(() => {
                     if (Math.random() > 0.8) {
                         lightning.style.animation = 'flashAnim 0.4s ease-out';
                         setTimeout(() => lightning.style.animation = '', 400);
@@ -34,7 +39,10 @@ async function syncIponHubWeather() {
                 }, 5000);
             }
         }
-    } catch (err) { console.log("Weather offline."); }
+    } catch (e) {
+        console.log("Weather Offline");
+    }
 }
-syncIponHubWeather();
-setInterval(syncIponHubWeather, 600000);
+
+// Run on page load
+updateWeather();
