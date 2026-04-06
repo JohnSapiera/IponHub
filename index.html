@@ -5,52 +5,165 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IponHub | Smart Community Savings</title>
     <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-900 text-white font-sans">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&family=Inter:wght@500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --white: #ffffff;
+            --neon-green: #39FF14;
+            --brand-green: #2E7D32;
+            --logo-red: #EA4335;
+            --logo-yellow: #FBBC05;
+            --logo-blue: #4285F4;
+            --cloud-shadow: rgba(129, 212, 250, 0.6);
+            --sky-top: #40C4FF;
+            --sky-bottom: #B3E5FC;
+        }
 
-    <nav class="p-6 flex justify-between items-center border-b border-gray-800">
-        <h1 class="text-2xl font-bold text-green-500 tracking-tight">IPONHUB</h1>
-        <div class="space-x-4">
-            <a href="#" class="text-gray-400 hover:text-white transition">About</a>
-            <button class="bg-green-600 hover:bg-green-700 px-5 py-2 rounded-full font-semibold transition">
-                Get Started
-            </button>
+        body { font-family: 'Inter', sans-serif; }
+
+        /* 🌦️ DYNAMIC WEATHER BACKGROUND (FULL SCREEN) */
+        .weather-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; overflow: hidden;
+            background: linear-gradient(180deg, var(--sky-top) 0%, var(--sky-bottom) 100%);
+            transition: all 1.5s ease;
+        }
+
+        .lightning-flash { position: absolute; width: 100%; height: 100%; background: white; opacity: 0; z-index: 10; pointer-events: none; }
+        @keyframes flashAnim { 0% { opacity: 0; } 10% { opacity: 0.8; } 15% { opacity: 0; } 20% { opacity: 0.7; } 25% { opacity: 0; } }
+
+        .rain-layer { position: absolute; width: 100%; height: 100%; z-index: 2; display: none; }
+        .rain-layer.active { display: block; }
+        .rain-layer::before {
+            content: ''; position: absolute; width: 100%; height: 100%;
+            background-image: linear-gradient(to bottom, rgba(255,255,255,0.2) 15%, transparent 15%);
+            background-size: 2px 25px; animation: rainDrop 0.15s linear infinite;
+        }
+        @keyframes rainDrop { from { transform: translateY(-25px); } to { transform: translateY(25px); } }
+
+        .vector-cloud {
+            position: absolute; background: var(--white); border-radius: 50px;
+            box-shadow: inset 0 -15px 0 var(--cloud-shadow); animation: vectorMove var(--speed) linear infinite;
+        }
+        .vector-cloud::before, .vector-cloud::after { content: ''; position: absolute; background: inherit; border-radius: 50%; box-shadow: inherit; }
+        .v1 { width: 180px; height: 60px; top: 15%; --speed: 35s; left: -200px; }
+        @keyframes vectorMove { from { transform: translateX(-100px); } to { transform: translateX(calc(100vw + 300px)); } }
+
+        /* 📱 LEFT-ALIGNED TABLET */
+        .mini-tablet { 
+            background: #1A1A1A; width: 138px; height: 82px; border-radius: 12px; 
+            padding: 5px; box-shadow: 0 15px 35px rgba(0,0,0,0.3); 
+            display: flex; justify-content: center; align-items: center; 
+        }
+        .tablet-screen { background: var(--white); width: 100%; height: 100%; border-radius: 9px; display: flex; justify-content: center; align-items: center; overflow: hidden; position: relative; }
+        
+        .brand-name { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 24px; letter-spacing: -1.5px; color: var(--brand-green); }
+        .brand-name .h-red { color: var(--logo-red); }
+        .brand-name .u-yellow { color: var(--logo-yellow); }
+        .brand-name .b-blue { color: var(--logo-blue); }
+
+        /* BUTTON EFFECTS */
+        .btn-green-hover {
+            background-color: var(--brand-green);
+            transition: all 0.3s ease;
+        }
+        .btn-green-hover:hover {
+            background-color: #1B5E20;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body class="text-white min-h-screen">
+
+    <div class="weather-bg" id="cebu-sky">
+        <div class="lightning-flash" id="lightning"></div>
+        <div class="rain-layer" id="rain"></div>
+        <div class="vector-cloud v1"></div>
+        <div class="vector-cloud v1" style="animation-delay: -15s; top: 40%; opacity: 0.6;"></div>
+    </div>
+
+    <nav class="p-6 flex justify-between items-center bg-black/20 backdrop-blur-md border-b border-white/10">
+        <div class="flex items-center gap-4">
+            <div class="mini-tablet scale-75 md:scale-90 origin-left">
+                <div class="tablet-screen">
+                    <div class="brand-name">Ipon<span class="h-red">H</span><span class="u-yellow">u</span><span class="b-blue">b</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex items-center space-x-3 md:space-x-6">
+            <a href="login.html" class="font-bold text-sm md:text-base hover:text-green-400 transition">LOGIN</a>
+            <a href="register.html" class="btn-green-hover px-6 py-2 rounded-full font-bold text-sm md:text-base shadow-lg">
+                REGISTER
+            </a>
         </div>
     </nav>
 
-    <main class="max-w-4xl mx-auto mt-20 text-center px-4">
-        <h2 class="text-5xl md:text-6xl font-extrabold mb-6 leading-tight">
-            Grow Your Savings Through <span class="text-green-500 underline decoration-green-600">Smart Networking</span>.
+    <main class="max-w-4xl mx-auto mt-20 text-center px-4 relative z-10">
+        <h2 class="text-5xl md:text-7xl font-extrabold mb-6 leading-tight drop-shadow-lg">
+            Grow Your Savings Through <br>
+            <span class="text-green-400 underline decoration-white/30">Smart Networking</span>.
         </h2>
-        <p class="text-xl text-gray-400 mb-10 max-w-2xl mx-auto">
+        <p class="text-xl text-white/90 mb-10 max-w-2xl mx-auto font-medium drop-shadow-md">
             Join the community-driven engine designed for fast rewards and secure growth. 
             Free to start, built to scale.
         </p>
 
         <div class="flex flex-col md:flex-row justify-center gap-4">
-            <button class="bg-white text-black px-8 py-4 rounded-xl font-bold text-lg hover:bg-gray-200 transition">
-                Sign Up for Free
+            <button onclick="location.href='register.html'" class="bg-white text-black px-10 py-4 rounded-2xl font-black text-lg hover:bg-gray-100 hover:scale-105 transition-all shadow-2xl">
+                SIGN UP FOR FREE
             </button>
-            <button class="border border-gray-700 px-8 py-4 rounded-xl font-bold text-lg hover:bg-gray-800 transition">
+            <button class="bg-black/30 backdrop-blur-md border border-white/20 px-10 py-4 rounded-2xl font-bold text-lg hover:bg-black/50 transition shadow-xl">
                 How it Works?
             </button>
         </div>
     </main>
 
-    <section class="mt-32 grid grid-cols-1 md:grid-cols-3 gap-8 px-6 max-w-6xl mx-auto pb-20">
-        <div class="bg-gray-800 p-8 rounded-2xl border border-gray-700">
-            <h3 class="text-xl font-bold mb-3">🚀 Instant Rewards</h3>
-            <p class="text-gray-400 text-sm">Earn credits for every successful referral. Use them for rewards or upgrade your status.</p>
+    <section class="mt-32 grid grid-cols-1 md:grid-cols-3 gap-6 px-6 max-w-6xl mx-auto pb-20 relative z-10">
+        <div class="bg-black/40 backdrop-blur-xl p-8 rounded-3xl border border-white/10 hover:border-green-500/50 transition-all">
+            <h3 class="text-2xl font-bold mb-3 text-green-400">🚀 Instant Rewards</h3>
+            <p class="text-white/80 text-sm leading-relaxed">Earn credits for every successful referral. Use them for rewards or upgrade your status.</p>
         </div>
-        <div class="bg-gray-800 p-8 rounded-2xl border border-gray-700">
-            <h3 class="text-xl font-bold mb-3">📈 Weekly Growth</h3>
-            <p class="text-gray-400 text-sm">Put your credits to work with time-locked contracts designed for short-term yields.</p>
+        <div class="bg-black/40 backdrop-blur-xl p-8 rounded-3xl border border-white/10 hover:border-green-500/50 transition-all">
+            <h3 class="text-2xl font-bold mb-3 text-green-400">📈 Weekly Growth</h3>
+            <p class="text-white/80 text-sm leading-relaxed">Put your credits to work with time-locked contracts designed for short-term yields.</p>
         </div>
-        <div class="bg-gray-800 p-8 rounded-2xl border border-gray-700">
-            <h3 class="text-xl font-bold mb-3">🛡️ Secure Logic</h3>
-            <p class="text-gray-400 text-sm">Transparent 1:1 digital credit economy with tiered withdrawal access for members.</p>
+        <div class="bg-black/40 backdrop-blur-xl p-8 rounded-3xl border border-white/10 hover:border-green-500/50 transition-all">
+            <h3 class="text-2xl font-bold mb-3 text-green-400">🛡️ Secure Logic</h3>
+            <p class="text-white/80 text-sm leading-relaxed">Transparent 1:1 digital credit economy with tiered withdrawal access for members.</p>
         </div>
     </section>
 
+    <script>
+        async function updateWeatherEngine() {
+            const sky = document.getElementById('cebu-sky');
+            const rain = document.getElementById('rain');
+            const lightning = document.getElementById('lightning');
+
+            const hour = new Date().getHours();
+            let isNight = (hour >= 18 || hour < 5);
+            let isSunset = (hour >= 16 && hour < 18);
+            
+            if (isNight) sky.style.background = "linear-gradient(180deg, #0B0E14 0%, #1A237E 100%)";
+            else if (isSunset) sky.style.background = "linear-gradient(180deg, #E64A19 0%, #FFB74D 100%)";
+            else sky.style.background = "linear-gradient(180deg, #40C4FF 0%, #B3E5FC 100%)";
+
+            try {
+                const resp = await fetch('https://api.openweathermap.org/data/2.5/weather?q=Cebu&appid=da0650965e6d628f844b24131df33246');
+                const data = await resp.json();
+                const condition = data.weather[0].main; 
+                
+                if (condition === 'Rain' || condition === 'Drizzle' || condition === 'Thunderstorm') {
+                    rain.classList.add('active');
+                    if(condition === 'Thunderstorm') {
+                        setInterval(() => { if (Math.random() > 0.8) { lightning.style.animation = 'flashAnim 0.4s ease-out'; setTimeout(() => lightning.style.animation = '', 400); } }, 5000);
+                    }
+                }
+            } catch (e) { console.log("Weather Offline"); }
+        }
+        updateWeatherEngine();
+    </script>
 </body>
 </html>
