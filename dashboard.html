@@ -24,52 +24,39 @@
 
         body { font-family: 'Inter', sans-serif; background-color: var(--white); min-height: 100vh; display: flex; flex-direction: column; align-items: center; margin: 0; overflow-x: hidden; }
 
-        /* 📱 TABLET LOGO AREA */
-        .mini-tablet { background: #1A1A1A; width: 135px; height: 80px; border-radius: 14px; padding: 5px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); position: relative; z-index: 10; margin-top: -40px; }
+        /* 📱 TABLET LOGO */
+        .mini-tablet { background: #1A1A1A; width: 135px; height: 80px; border-radius: 14px; padding: 5px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); position: relative; z-index: 50; margin-top: -40px; }
         .tablet-screen { background: var(--white); width: 100%; height: 100%; border-radius: 10px; display: flex; justify-content: center; align-items: center; position: relative; overflow: hidden; border: 0.5px solid #000; }
-        
-        .brand-wrapper { position: relative; display: inline-block; }
         .brand-name { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 22px; letter-spacing: -1.5px; color: var(--brand-green); position: relative; z-index: 1; }
-        
-        .shine-overlay { 
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2; mix-blend-mode: overlay; 
-            background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 50%, rgba(255,255,255,0) 100%); 
-            background-size: 200% 100%; animation: brandShine 3s ease-in-out infinite; 
-        }
-        @keyframes brandShine { 0% { background-position: 200% 0; } 45% { background-position: -100% 0; } 100% { background-position: -100% 0; } }
+        .shine-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2; mix-blend-mode: overlay; background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 50%, rgba(255,255,255,0) 100%); background-size: 200% 100%; animation: brandShine 3s ease-in-out infinite; }
+        @keyframes brandShine { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
 
-        /* 📱 IPHONE FRAME ANIMATION */
-        .iphone-frame { width: 92%; max-width: 360px; margin-top: 20px; padding: 4px; background: var(--neon-green); border-radius: 50px; box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.15); position: relative; animation: float 5s ease-in-out infinite; z-index: 20; }
+        /* 📱 IPHONE FRAME */
+        .iphone-frame { width: 92%; max-width: 360px; margin-top: 20px; padding: 4px; background: var(--neon-green); border-radius: 50px; box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.15); position: relative; animation: float 5s ease-in-out infinite; z-index: 40; }
         .white-stroke { background: var(--white); padding: 2px; border-radius: 47px; }
         .neon-inner-stroke { background: var(--neon-green); padding: 2px; border-radius: 45px; }
-        .dashboard-content { background: rgba(255, 255, 255, 0.82); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border-radius: 43px; padding: 25px 22px; min-height: 520px; display: flex; flex-direction: column; }
+        .dashboard-content { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); border-radius: 43px; padding: 25px 22px; min-height: 520px; display: flex; flex-direction: column; }
         @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-12px); } }
 
         /* UI ELEMENTS */
         .balance-amount { font-family: 'Montserrat', sans-serif; font-size: 36px; color: #1a1a1a; line-height: 1; margin-top: 5px; }
         .balance-amount span { color: var(--brand-green); font-size: 22px; }
-        
-        .btn-dash { flex: 1; padding: 15px; border-radius: 18px; font-weight: 800; font-size: 13px; text-transform: uppercase; transition: 0.2s; }
-        .btn-dash:active { transform: scale(0.95); }
+        .btn-dash { flex: 1; padding: 15px; border-radius: 18px; font-weight: 800; font-size: 13px; text-transform: uppercase; }
         .btn-cashin { background: var(--brand-green); color: white; }
         .btn-withdraw { border: 2.5px solid var(--brand-green); color: var(--brand-green); }
 
-        /* ICONS CUSTOM STYLE */
+        /* ICONS */
         .paper-bg { width: 35px; height: 45px; background: white; border: 1.5px solid #ddd; border-radius: 5px; padding: 8px; display: flex; flex-direction: column; gap: 4px; transform: rotate(-5deg); transition: 0.3s; }
         .paper-line { height: 2px; background: #eee; border-radius: 2px; }
-        .magnifier { position: absolute; bottom: 0px; right: 0px; transform: scale(0.8); transition: 0.4s; }
+        .magnifier { position: absolute; bottom: 0px; right: 0px; transform: scale(0.8); }
         .glass { width: 35px; height: 35px; border: 3px solid var(--brand-green); background: rgba(57, 255, 20, 0.1); border-radius: 50%; }
         .handle { width: 4px; height: 12px; background: var(--brand-green); margin-left: 28px; margin-top: -2px; transform: rotate(-45deg); border-radius: 4px; }
-        .coin-icon { width: 50px; height: 50px; background: #FBBC05; border-radius: 50%; border: 3px dashed #B8860B; display: flex; justify-content: center; align-items: center; transition: 0.4s; }
-        .coin-icon:hover { transform: rotate(15deg) scale(1.1); }
+        .coin-icon { width: 50px; height: 50px; background: #FBBC05; border-radius: 50%; border: 3px dashed #B8860B; display: flex; justify-content: center; align-items: center; }
 
-        /* MODAL STEPS */
-        .bar { flex: 1; height: 6px; border-radius: 10px; background: #eee; transition: 0.3s; }
-        .active-red { background: var(--neon-red); box-shadow: 0 0 10px var(--neon-red); }
-        .active-blue { background: var(--neon-blue); box-shadow: 0 0 10px var(--neon-blue); }
-        .active-green { background: var(--neon-green); box-shadow: 0 0 10px var(--neon-green); }
-        
-        .btn-submit { width: 100%; margin-top: 20px; padding: 16px; border-radius: 18px; font-weight: 800; opacity: 0.4; pointer-events: none; transition: 0.3s; border: 2px solid transparent; }
+        /* MODAL FIX */
+        .bar { flex: 1; height: 6px; border-radius: 10px; background: #eee; }
+        .active-green { background: var(--neon-green); }
+        .btn-submit { width: 100%; margin-top: 20px; padding: 16px; border-radius: 18px; font-weight: 800; opacity: 0.4; pointer-events: none; }
         .btn-submit.ready { opacity: 1; pointer-events: auto; }
     </style>
 </head>
@@ -80,14 +67,14 @@
         <div class="rain-layer" id="rain"></div>
         <div id="cloud-container">
             <div class="vector-cloud v1"></div>
-            <div class="vector-cloud v1" style="animation-delay: -15s; top: 40%; opacity: 0.6;"></div>
-            <div class="vector-cloud v1" style="animation-delay: -25s; top: 15%; transform: scale(0.7); opacity: 0.4;"></div>
+            <div class="vector-cloud v1" style="animation-delay: -10s; top: 35%; opacity: 0.6;"></div>
+            <div class="vector-cloud v1" style="animation-delay: -20s; top: 15%; transform: scale(0.7); opacity: 0.4;"></div>
         </div>
     </div>
 
     <div class="mini-tablet">
         <div class="tablet-screen">
-            <div class="brand-wrapper">
+            <div class="brand-wrapper relative">
                 <div class="brand-name">
                     Ipon<span style="color:var(--logo-red)">H</span><span style="color:var(--logo-yellow)">u</span><span style="color:var(--logo-blue)">b</span>
                 </div>
@@ -102,39 +89,34 @@
                 <div class="dashboard-content">
                     
                     <div class="wallet-wrap">
-                        <div class="flex justify-between items-start">
+                        <div class="flex justify-between">
                             <div>
-                                <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Available Balance</p>
+                                <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Balance</p>
                                 <h1 class="balance-amount"><span>₱</span>1,000,000.00</h1>
                             </div>
-                            <div onclick="location.reload()" class="w-9 h-9 bg-white border border-[#39FF14] rounded-full flex items-center justify-center cursor-pointer active:rotate-180 transition-all duration-500">
-                                <span class="text-green-500 text-lg">↻</span>
-                            </div>
+                            <div onclick="location.reload()" class="w-8 h-8 rounded-full border border-green-500 flex items-center justify-center cursor-pointer text-green-600">↻</div>
                         </div>
                         <div class="flex gap-3 mt-6">
-                            <button onclick="openModal('cashinModal')" class="btn-dash btn-cashin shadow-md">Cash In</button>
+                            <button onclick="openModal('cashinModal')" class="btn-dash btn-cashin">Cash In</button>
                             <button class="btn-dash btn-withdraw">Withdraw</button>
                         </div>
                     </div>
 
-                    <div class="flex items-center gap-9 mt-10 ml-1">
+                    <div class="flex items-center gap-8 mt-10 ml-1">
                         <div onclick="openModal('prospectingModal')" class="flex flex-col items-center cursor-pointer group">
                             <div class="relative w-16 h-16 flex items-center justify-center">
-                                <div class="paper-bg group-hover:rotate-0"><div class="paper-line w-6"></div><div class="paper-line w-4"></div><div class="paper-line w-7"></div></div>
-                                <div class="magnifier group-hover:scale-110"><div class="glass"></div><div class="handle"></div></div>
+                                <div class="paper-bg"><div class="paper-line w-6"></div><div class="paper-line w-4"></div><div class="paper-line w-7"></div></div>
+                                <div class="magnifier"><div class="glass"></div><div class="handle"></div></div>
                             </div>
-                            <p class="text-[9px] font-black text-gray-400 mt-2 uppercase tracking-tighter group-hover:text-green-500">Prospecting</p>
+                            <p class="text-[9px] font-black text-gray-400 mt-2 uppercase">Prospecting</p>
                         </div>
-                        <div onclick="openModal('dealsModal')" class="flex flex-col items-center cursor-pointer group">
-                            <div class="coin-icon group-hover:scale-110"><span class="font-black text-[#8B4513] text-xl">₱</span></div>
-                            <p class="text-[9px] font-black text-gray-400 mt-2 uppercase tracking-tighter group-hover:text-yellow-600">My Deals</p>
+                        <div onclick="openModal('dealsModal')" class="flex flex-col items-center cursor-pointer">
+                            <div class="coin-icon"><span class="font-black text-[#8B4513] text-xl">₱</span></div>
+                            <p class="text-[9px] font-black text-gray-400 mt-2 uppercase">My Deals</p>
                         </div>
                     </div>
 
-                    <div class="my-8 space-y-[2px]">
-                        <div class="w-full h-[1px] bg-gray-100"></div>
-                        <div class="w-full h-[1px] bg-gray-50"></div>
-                    </div>
+                    <div class="my-8 w-full h-[1px] bg-gray-100"></div>
 
                     <div class="mt-auto pb-4">
                         <div class="w-16 h-1.5 bg-gray-200 rounded-full mx-auto"></div>
@@ -145,93 +127,27 @@
         </div>
     </div>
 
-    <div id="cashinModal" class="fixed inset-0 z-[100] hidden bg-black/60 backdrop-blur-sm items-center justify-center p-6">
-        <div class="bg-white w-full max-w-[340px] rounded-[40px] p-8 relative border-[3px] border-[#39FF14]">
+    <div id="cashinModal" class="fixed inset-0 z-[100] hidden bg-black/50 backdrop-blur-sm items-center justify-center p-5">
+        <div class="bg-white w-full max-w-[340px] rounded-[40px] p-8 relative border-2 border-[#39FF14]">
             <span class="absolute right-6 top-6 text-2xl text-gray-300 cursor-pointer" onclick="closeModal('cashinModal')">&times;</span>
-            <h2 class="text-center font-black text-gray-800 mb-6 uppercase tracking-tight">GCash Cash In</h2>
-            
-            <div class="w-36 h-36 mx-auto bg-gray-50 rounded-3xl border-2 border-dashed border-gray-200 p-2 mb-6">
-                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=IponHubPay" class="w-full h-full object-contain grayscale opacity-50">
-            </div>
-
-            <div class="space-y-3">
-                <input type="number" id="gcashNum" class="w-full p-4 rounded-2xl bg-gray-50 border-2 border-transparent focus:border-[#39FF14] outline-none font-bold transition-all" placeholder="GCash Number" oninput="validateForm()">
-                <input type="number" id="amountVal" class="hidden w-full p-4 rounded-2xl bg-gray-50 border-2 border-transparent focus:border-[#00E5FF] outline-none font-bold transition-all" placeholder="Amount" oninput="validateForm()">
-                <input type="text" id="refNum" class="hidden w-full p-4 rounded-2xl bg-gray-50 border-2 border-transparent focus:border-[#39FF14] outline-none font-bold transition-all" placeholder="Reference No." oninput="validateForm()">
-                
-                <div class="flex gap-1.5 mt-4 items-center">
-                    <div id="bar1" class="bar"></div>
-                    <div id="bar2" class="bar"></div>
-                    <div id="bar3" class="bar"></div>
-                    <span id="stepText" class="text-[10px] font-black text-gray-300 ml-2">0/3</span>
-                </div>
-                
-                <button id="submitBtn" class="btn-submit bg-gray-100 text-gray-400" onclick="confirmPayment()">SUBMIT</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="prospectingModal" class="fixed inset-0 z-[100] hidden bg-black/60 backdrop-blur-sm items-center justify-center p-6">
-        <div class="bg-white w-full max-w-[340px] rounded-[40px] p-8 relative border-[3px] border-[#39FF14]">
-            <span class="absolute right-6 top-6 text-2xl text-gray-300 cursor-pointer" onclick="closeModal('prospectingModal')">&times;</span>
-            <div class="bg-[#39FF14] text-black text-[10px] font-black px-3 py-1 rounded-full inline-block mb-2 uppercase">Live Opportunities</div>
-            <h2 class="font-black text-gray-800 text-xl uppercase mb-4">Cebu Deals</h2>
-            <div class="space-y-3 overflow-y-auto max-h-60 pr-2">
-                <div class="p-4 bg-gray-50 rounded-2xl border border-gray-100">
-                    <p class="font-bold text-gray-700">Water Station Refill</p>
-                    <p class="text-[10px] text-green-600 font-bold tracking-widest">TALISAY CITY</p>
-                </div>
-                <div class="p-4 bg-gray-50 rounded-2xl border border-gray-100">
-                    <p class="font-bold text-gray-700">LPG Distribution</p>
-                    <p class="text-[10px] text-green-600 font-bold tracking-widest">CEBU CITY</p>
-                </div>
+            <h2 class="text-center font-black text-gray-800 mb-6 uppercase">GCash Cash In</h2>
+            <div class="space-y-4">
+                <input type="number" id="gcashNum" class="w-full p-4 rounded-xl bg-gray-50 outline-none" placeholder="GCash Number" oninput="validateForm()">
+                <input type="number" id="amountVal" class="hidden w-full p-4 rounded-xl bg-gray-50 outline-none" placeholder="Amount" oninput="validateForm()">
+                <button id="submitBtn" class="btn-submit bg-gray-100 text-gray-400" onclick="alert('Success!')">SUBMIT</button>
             </div>
         </div>
     </div>
 
     <script>
-        function openModal(id) { 
-            const m = document.getElementById(id);
-            m.classList.remove('hidden'); 
-            m.classList.add('flex'); 
-        }
-        function closeModal(id) { 
-            const m = document.getElementById(id);
-            m.classList.add('hidden'); 
-            m.classList.remove('flex'); 
-        }
-
+        function openModal(id) { document.getElementById(id).classList.remove('hidden'); document.getElementById(id).classList.add('flex'); }
+        function closeModal(id) { document.getElementById(id).classList.add('hidden'); document.getElementById(id).classList.remove('flex'); }
         function validateForm() {
             const g = document.getElementById('gcashNum').value;
             const a = document.getElementById('amountVal');
-            const r = document.getElementById('refNum');
-            const b1 = document.getElementById('bar1'), b2 = document.getElementById('bar2'), b3 = document.getElementById('bar3');
-            const st = document.getElementById('stepText'), btn = document.getElementById('submitBtn');
-
-            // Toggle Visibility
-            a.classList.toggle('hidden', g.length < 11);
-            r.classList.toggle('hidden', a.value.length < 2);
-
-            // Step Logic
-            b1.className = 'bar'; b2.className = 'bar'; b3.className = 'bar';
-            if (r.value.length > 5) {
-                b1.classList.add('active-green'); b2.classList.add('active-green'); b3.classList.add('active-green');
-                st.innerText = "3/3"; st.className = "text-[10px] font-black text-green-500 ml-2";
-                btn.className = "btn-submit ready bg-green-500 text-white shadow-lg"; btn.innerText = "CONFIRM PAYMENT";
-            } else if (a.value.length >= 2) {
-                b1.classList.add('active-blue'); b2.classList.add('active-blue');
-                st.innerText = "2/3"; st.className = "text-[10px] font-black text-cyan-500 ml-2";
-                btn.className = "btn-submit bg-gray-100 text-gray-400"; btn.innerText = "ENTER REF NO.";
-            } else if (g.length >= 11) {
-                b1.classList.add('active-red');
-                st.innerText = "1/3"; st.className = "text-[10px] font-black text-red-500 ml-2";
-                btn.className = "btn-submit bg-gray-100 text-gray-400"; btn.innerText = "ENTER AMOUNT";
-            }
-        }
-
-        function confirmPayment() { 
-            alert("✨ GCash Transaction Received! \nWait for verification."); 
-            closeModal('cashinModal'); 
+            const btn = document.getElementById('submitBtn');
+            if (g.length >= 11) { a.classList.remove('hidden'); }
+            if (a.value.length >= 2) { btn.classList.add('ready'); btn.className="btn-submit ready bg-green-500 text-white"; }
         }
     </script>
 
