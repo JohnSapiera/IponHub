@@ -22,7 +22,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', sans-serif; background-color: #f8f9fa; min-height: 100vh; display: flex; flex-direction: column; align-items: center; overflow-x: hidden; }
 
-        /* 🌦️ 4D WEATHER COVER (CEBU SYNC) */
+        /* 🌦️ DEFAULT WEATHER COVER (SYNCED) */
         .cover-area {
             width: 100%; height: 160px; position: relative; z-index: 1;
             border-top: 5px solid var(--white); border-bottom: 5px solid var(--white);
@@ -52,7 +52,7 @@
         .v1::after { width: 70px; height: 70px; top: -30px; right: 20px; }
         @keyframes vectorMove { from { transform: translateX(-100px); } to { transform: translateX(calc(100vw + 300px)); } }
 
-        /* 📱 TABLET & BRAND SHINE */
+        /* 📱 DEFAULT MINI TABLET */
         .mini-tablet { background: #1A1A1A; width: 138px; height: 82px; border-radius: 12px; padding: 5px; box-shadow: 0 15px 35px rgba(0,0,0,0.4); display: flex; justify-content: center; align-items: center; position: relative; z-index: 5; margin-top: -41px; }
         .tablet-screen { background: var(--white); width: 100%; height: 100%; border-radius: 9px; display: flex; justify-content: center; align-items: center; border: 0.5px solid #000; overflow: hidden; position: relative; }
         
@@ -65,20 +65,20 @@
         .shine-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2; mix-blend-mode: overlay; background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0) 40%, rgba(255,255,255,1) 50%, rgba(255,255,255,0) 60%, rgba(255,255,255,0) 100%); background-size: 200% 100%; animation: brandShine 3s ease-in-out infinite; }
         @keyframes brandShine { 0% { background-position: 200% 0; } 45% { background-position: -100% 0; } 100% { background-position: -100% 0; } }
 
-        /* 📦 RESET FORM */
+        /* 📦 RESET FORM - SYNCED SIZE */
         .outer-layer {
-            width: 92%; max-width: 380px;
-            margin-top: 40px; margin-bottom: 50px;
+            width: 92%; max-width: 400px; /* Matched with Login/Register */
+            margin-top: 30px; margin-bottom: 50px;
             background: var(--neon-green); padding: 4px; border-radius: 24px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.1); z-index: 10;
         }
 
         .container-box { background: var(--white); border-radius: 20px; overflow: hidden; }
-        .form-banner { padding: 35px 25px 10px 25px; text-align: center; }
-        .form-banner h2 { font-family: 'Montserrat', sans-serif; font-size: 20px; color: #1A1A1A; margin-bottom: 8px; letter-spacing: -0.5px; }
+        .form-banner { padding: 30px 25px 10px 25px; text-align: center; }
+        .form-banner h2 { font-family: 'Montserrat', sans-serif; font-size: 18px; color: #1A1A1A; margin-bottom: 5px; }
         .form-banner p { font-size: 12px; color: #546E7A; font-weight: 500; line-height: 1.5; }
 
-        .form-content { padding: 25px 30px 40px 30px; }
+        .form-content { padding: 20px 30px 30px 30px; }
         .input-group { margin-bottom: 20px; }
         .input-group label { display: block; font-size: 10px; font-weight: 700; margin-bottom: 8px; text-transform: uppercase; color: #95A5A6; letter-spacing: 0.5px; }
         .form-control { width: 100%; padding: 14px; border: 1.5px solid #E5E7EB; border-radius: 12px; background-color: #F9FAFB; font-size: 14px; outline: none; transition: 0.2s; }
@@ -122,22 +122,22 @@
     <div class="outer-layer">
         <div class="container-box">
             <div class="form-banner">
-                <h2>Account Recovery</h2>
+                <h2>Account Recovery 🔐</h2>
                 <p>Provide your registered email address to initiate the secure credential reset process.</p>
             </div>
 
             <div class="form-content">
                 <form id="forgotForm">
                     <div class="input-group">
-                        <label>Corporate Email Address</label>
-                        <input type="email" class="form-control" id="reset-email" required placeholder="">
+                        <label>Email Address</label>
+                        <input type="email" class="form-control" id="reset-email" required placeholder="example@gmail.com">
                     </div>
                     <button type="submit" class="btn-action">AUTHENTICATE EMAIL</button>
                 </form>
             </div>
 
             <div class="form-footer">
-                <a href="frontend/login.html">Return to Login</a>
+                <a href="login.html">Return to Login</a>
             </div>
         </div>
     </div>
@@ -163,21 +163,24 @@
     </div>
 
     <script>
-        // --- CEBU WEATHER ENGINE ---
+        // --- CEBU WEATHER ENGINE (MATCHES LOGIN) ---
         async function updateWeatherEngine() {
             const sky = document.getElementById('cebu-sky');
             const rain = document.getElementById('rain');
             const lightning = document.getElementById('lightning');
+
+            const hour = new Date().getHours();
+            let isNight = (hour >= 18 || hour < 5);
+            let isSunset = (hour >= 16 && hour < 18);
+            
+            if (isNight) sky.style.background = "linear-gradient(180deg, #0B0E14 0%, #1A237E 100%)";
+            else if (isSunset) sky.style.background = "linear-gradient(180deg, #E64A19 0%, #FFB74D 100%)";
+            else sky.style.background = "linear-gradient(180deg, #40C4FF 0%, #B3E5FC 100%)";
+
             try {
                 const resp = await fetch('https://api.openweathermap.org/data/2.5/weather?q=Cebu&appid=da0650965e6d628f844b24131df33246');
                 const data = await resp.json();
                 const condition = data.weather[0].main; 
-                const hour = new Date().getHours();
-                let isNight = (hour >= 18 || hour < 5);
-                
-                if (isNight) sky.style.background = "linear-gradient(180deg, #0B0E14 0%, #1A237E 100%)";
-                else if (hour >= 16 && hour < 18) sky.style.background = "linear-gradient(180deg, #E64A19 0%, #FFB74D 100%)";
-                else sky.style.background = "linear-gradient(180deg, #40C4FF 0%, #B3E5FC 100%)";
                 
                 if (condition === 'Rain' || condition === 'Drizzle' || condition === 'Thunderstorm') {
                     rain.classList.add('active');
@@ -207,7 +210,7 @@
             const nPass = document.getElementById('n-pass').value;
             const cNPass = document.getElementById('c-n-pass').value;
             if (nPass !== cNPass) { alert("Verification failed. Passwords do not match."); return; }
-            alert("Security credentials updated. Redirecting to terminal...");
+            alert("Security credentials updated. Redirecting to login...");
             window.location.href = "login.html";
         };
 
