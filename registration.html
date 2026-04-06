@@ -23,7 +23,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', sans-serif; background-color: #f8f9fa; min-height: 100vh; display: flex; flex-direction: column; align-items: center; overflow-x: hidden; }
 
-        /* 🌦️ DEFAULT WEATHER COVER (MATCHES LOGIN) */
+        /* 🌦️ WEATHER COVER */
         .cover-area {
             width: 100%; height: 160px; position: relative; z-index: 1;
             border-top: 5px solid var(--white); border-bottom: 5px solid var(--white);
@@ -53,7 +53,7 @@
         .v1::after { width: 70px; height: 70px; top: -30px; right: 20px; }
         @keyframes vectorMove { from { transform: translateX(-100px); } to { transform: translateX(calc(100vw + 300px)); } }
 
-        /* 📱 DEFAULT MINI TABLET */
+        /* 📱 MINI TABLET */
         .mini-tablet { background: #1A1A1A; width: 138px; height: 82px; border-radius: 12px; padding: 5px; box-shadow: 0 15px 35px rgba(0,0,0,0.4); display: flex; justify-content: center; align-items: center; position: relative; z-index: 5; margin-top: -41px; }
         .tablet-screen { background: var(--white); width: 100%; height: 100%; border-radius: 9px; display: flex; justify-content: center; align-items: center; border: 0.5px solid #000; overflow: hidden; position: relative; }
         
@@ -66,21 +66,14 @@
         .shine-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2; mix-blend-mode: overlay; background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0) 40%, rgba(255,255,255,1) 50%, rgba(255,255,255,0) 60%, rgba(255,255,255,0) 100%); background-size: 200% 100%; animation: brandShine 3s ease-in-out infinite; }
         @keyframes brandShine { 0% { background-position: 200% 0; } 45% { background-position: -100% 0; } 100% { background-position: -100% 0; } }
 
-        /* 📦 ADJUSTED REGISTRATION FORM */
-        .register-outer-layer {
-            width: 92%; max-width: 400px;
-            margin-top: 30px; margin-bottom: 50px;
-            background: var(--neon-green); padding: 4px; border-radius: 24px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1); z-index: 10;
-        }
-
+        /* 📦 FORM STYLING */
+        .register-outer-layer { width: 92%; max-width: 400px; margin-top: 30px; margin-bottom: 50px; background: var(--neon-green); padding: 4px; border-radius: 24px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); z-index: 10; }
         .login-container { background: var(--white); border-radius: 20px; overflow: hidden; }
         .form-banner { padding: 25px 20px 10px 20px; text-align: center; }
         .form-banner h2 { font-family: 'Montserrat', sans-serif; font-size: 18px; color: #333; margin-bottom: 5px; }
         .form-banner p { font-size: 12px; color: #7f8c8d; }
-
         .form-content { padding: 15px 25px 25px 25px; }
-        .input-group { margin-bottom: 12px; } /* Slightly tighter than login to manage height */
+        .input-group { margin-bottom: 12px; }
         .input-group label { display: block; font-size: 10px; font-weight: 700; margin-bottom: 5px; text-transform: uppercase; color: #95A5A6; }
         .form-control { width: 100%; padding: 12px; border: 1.5px solid #E5E7EB; border-radius: 10px; background-color: #F9FAFB; font-size: 14px; outline: none; transition: 0.2s; }
         .form-control:focus { border-color: var(--brand-green); background-color: #fff; }
@@ -93,8 +86,9 @@
         .terms-group input { width: 18px; height: 18px; accent-color: var(--brand-green); cursor: pointer; }
         #u-terms-link { color: var(--brand-green); font-weight: 700; text-decoration: underline; cursor: pointer; }
 
-        .btn-register { width: 100%; padding: 16px; background-color: var(--brand-green); color: white; border: none; border-radius: 12px; font-size: 16px; font-family: 'Montserrat', sans-serif; font-weight: 700; cursor: pointer; box-shadow: 0 4px 15px rgba(46, 125, 50, 0.2); }
-        .btn-register:active { transform: scale(0.98); }
+        .btn-register { width: 100%; padding: 16px; background-color: var(--brand-green); color: white; border: none; border-radius: 12px; font-size: 16px; font-family: 'Montserrat', sans-serif; font-weight: 700; cursor: pointer; transition: 0.3s; }
+        .btn-register:disabled { background-color: #95A5A6; cursor: not-allowed; opacity: 0.7; }
+        .btn-register:active:not(:disabled) { transform: scale(0.98); }
 
         .form-footer { text-align: center; padding: 20px; font-size: 13px; background: #F9F9F9; border-top: 1px solid #EEE; }
         .form-footer a { color: var(--brand-green); text-decoration: none; font-weight: 700; }
@@ -170,7 +164,7 @@
                         <label for="u-terms">I agree to the <span id="u-terms-link">Terms of Service</span></label>
                     </div>
 
-                    <button type="submit" class="btn-register">SUMALI NA! ✨</button>
+                    <button type="submit" class="btn-register" id="submitBtn">SUMALI NA! ✨</button>
                 </form>
             </div>
 
@@ -192,52 +186,114 @@
         </div>
     </div>
 
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
     <script>
-        async function updateWeather() {
-            const sky = document.getElementById('cebu-sky');
-            const rain = document.getElementById('rain');
-            const lightning = document.getElementById('lightning');
-            
-            // Sync current time logic
-            const hour = new Date().getHours();
-            let isNight = (hour >= 18 || hour < 5);
-            let isSunset = (hour >= 16 && hour < 18);
+        // ⚙️ FIREBASE CONFIG
+        const firebaseConfig = {
+            apiKey: "AIzaSyBbZ3i40HZamjh3HjV3wUUJNruGWk4HEdM",
+            authDomain: "test-project-4f927.firebaseapp.com",
+            databaseURL: "https://test-project-4f927.firebaseio.com",
+            projectId: "test-project-4f927",
+            storageBucket: "test-project-4f927.firebasestorage.app",
+            messagingSenderId: "288046018976",
+            appId: "1:288046018976:web:8c2be6ecf235a5d489b4c5"
+        };
 
-            if (isNight) sky.style.background = "linear-gradient(180deg, #0B0E14 0%, #1A237E 100%)";
-            else if (isSunset) sky.style.background = "linear-gradient(180deg, #E64A19 0%, #FFB74D 100%)";
-            else sky.style.background = "linear-gradient(180deg, #40C4FF 0%, #B3E5FC 100%)";
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.database();
 
-            try {
-                const resp = await fetch('https://api.openweathermap.org/data/2.5/weather?q=Cebu&appid=da0650965e6d628f844b24131df33246');
-                const data = await resp.json();
-                const condition = data.weather[0].main; 
-
-                if (condition === 'Rain' || condition === 'Drizzle' || condition === 'Thunderstorm') {
-                    rain.classList.add('active');
-                    if(condition === 'Thunderstorm') {
-                        setInterval(() => { if (Math.random() > 0.8) { lightning.style.animation = 'flashAnim 0.4s ease-out'; setTimeout(() => lightning.style.animation = '', 400); } }, 5000);
-                    }
-                }
-            } catch (e) { console.log("Weather Offline"); }
-        }
-        updateWeather();
-
+        // UI Elements
+        const regForm = document.getElementById('regForm');
+        const submitBtn = document.getElementById('submitBtn');
         const pass = document.getElementById('u-pass');
         const cpass = document.getElementById('u-cpass');
         const errorMsg = document.getElementById('error-msg');
         const refTrigger = document.getElementById('ref-trigger');
         const refField = document.getElementById('ref-field');
         const noRefLink = document.getElementById('no-ref-link');
+        const modal = document.getElementById("tos-modal");
 
+        // 🌦️ WEATHER LOGIC
+        async function updateWeather() {
+            const sky = document.getElementById('cebu-sky');
+            const rain = document.getElementById('rain');
+            const lightning = document.getElementById('lightning');
+            const hour = new Date().getHours();
+            if (hour >= 18 || hour < 5) sky.style.background = "linear-gradient(180deg, #0B0E14 0%, #1A237E 100%)";
+            else if (hour >= 16 && hour < 18) sky.style.background = "linear-gradient(180deg, #E64A19 0%, #FFB74D 100%)";
+            try {
+                const resp = await fetch('https://api.openweathermap.org/data/2.5/weather?q=Cebu&appid=da0650965e6d628f844b24131df33246');
+                const data = await resp.json();
+                if (data.weather[0].main.includes('Rain') || data.weather[0].main.includes('Thunder')) {
+                    rain.classList.add('active');
+                    if(data.weather[0].main.includes('Thunder')) {
+                        setInterval(() => { if (Math.random() > 0.8) { lightning.style.animation = 'flashAnim 0.4s ease-out'; setTimeout(() => lightning.style.animation = '', 400); } }, 5000);
+                    }
+                }
+            } catch (e) {}
+        }
+        updateWeather();
+
+        // 🛠️ FORM INTERACTION
         refTrigger.onclick = () => { refField.style.display = 'block'; refTrigger.style.display = 'none'; };
-        noRefLink.onclick = () => { refField.style.display = 'none'; refTrigger.style.display = 'block'; };
+        noRefLink.onclick = () => { refField.style.display = 'none'; refTrigger.style.display = 'block'; document.getElementById('u-ref').value = ""; };
+        document.getElementById("u-terms-link").onclick = () => modal.style.display = "block";
+        document.getElementById("agree-btn").onclick = () => modal.style.display = "none";
 
         function validate() { errorMsg.style.display = (cpass.value.length > 0 && pass.value !== cpass.value) ? 'block' : 'none'; }
         pass.oninput = validate; cpass.oninput = validate;
 
-        const modal = document.getElementById("tos-modal");
-        document.getElementById("u-terms-link").onclick = () => modal.style.display = "block";
-        document.getElementById("agree-btn").onclick = () => modal.style.display = "none";
+        // 🚀 FIREBASE REGISTRATION LOGIC
+        regForm.onsubmit = async (e) => {
+            e.preventDefault();
+            
+            const fullName = document.getElementById('u-name').value;
+            const email = document.getElementById('u-email').value;
+            const password = pass.value;
+            const confirmPass = cpass.value;
+            const refCode = document.getElementById('u-ref').value || "NONE";
+
+            if (password !== confirmPass) return;
+
+            // Start Loading State
+            submitBtn.disabled = true;
+            submitBtn.innerText = "Sinasali ka na... ⏳";
+
+            try {
+                // 1. Create Account in Auth
+                const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+                const user = userCredential.user;
+
+                // 2. Setup Database Node
+                const userData = {
+                    full_name: fullName,
+                    email: email,
+                    nick_name: "", 
+                    bday: "",
+                    account_status: "Free",
+                    balance: 0,
+                    referral_code_used: refCode,
+                    my_referral_code: fullName.substring(0,3).toUpperCase() + Math.floor(1000 + Math.random() * 9000),
+                    role: "user",
+                    created_at: new Date().toISOString()
+                };
+
+                // 3. Save to Realtime Database
+                await db.ref('users/' + user.uid).set(userData);
+
+                alert("Welcome sa IponHub, " + fullName + "! ✨");
+                window.location.href = "dashboard.html";
+
+            } catch (error) {
+                alert("Mali: " + error.message);
+                submitBtn.disabled = false;
+                submitBtn.innerText = "SUMALI NA! ✨";
+            }
+        };
     </script>
 </body>
 </html>
