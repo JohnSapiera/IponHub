@@ -1,35 +1,65 @@
 async function syncIponHubWeather() {
-    const cover = document.getElementById('global-weather-cover');
-    const rain = document.getElementById('global-rain');
+    const sky = document.getElementById('cebu-sky');
+    const rain = document.getElementById('rain');
+    const lightning = document.getElementById('lightning');
 
-    // 1. LOCK SA CEBU TIME (Kahit nasaan ang user)
-    const cebuTime = new Date(new Date().toLocaleString("en-US", {timeZone: "Asia/Manila"}));
-    const hour = cebuTime.getHours();
+    // 1. REALTIME TIME CHECK (PH Standard Time)
+    const now = new Date();
+    const hour = now.getHours(); // 0 to 23
 
-    // 2. APPLY SKY STANDARD
-    cover.classList.remove('day', 'sunset', 'night');
-    if (hour >= 18 || hour < 5) cover.classList.add('night');
-    else if (hour >= 16) cover.classList.add('sunset');
-    else cover.classList.add('day');
+    // Reset classes muna para malinis
+    sky.classList.remove('sky-day', 'sky-sunset', 'sky-night');
 
-    // 3. SYNC WEATHER DATA (OpenWeather API)
+    // Apply Sky based on Time
+    if (hour >= 18 || hour < 5) {
+        sky.classList.add('sky-night');
+    } else if (hour >= 16) {
+        sky.classList.add('sky-sunset');
+    } else {
+        sky.classList.add('sky-day');
+    }
+
+    // 2. REALTIME WEATHER CHECK (Cebu City)
     try {
-        const response = await fetch('https://api.openweathermap.org/data/2.5/weather?q=Cebu&appid=da0650965e6d628f844b24131df33246');
+        // Ginagamit ang iyong API Key
+        const apiKey = 'da0650965e6d628f844b24131df33246';
+        const url = `https://api.openweathermap.org/data/2.5/weather?q=Cebu&appid=${apiKey}`;
+        
+        const response = await fetch(url);
         const data = await response.json();
-        const isRaining = data.weather[0].main.includes('Rain') || data.weather[0].main.includes('Thunder');
+        
+        // Check kung may ulan sa data
+        const weatherMain = data.weather[0].main.toLowerCase();
+        const isRaining = weatherMain.includes('rain') || weatherMain.includes('drizzle') || weatherMain.includes('thunderstorm');
 
         if (isRaining) {
             rain.classList.add('active');
-            localStorage.setItem('iponhub_weather_state', 'rainy');
+            
+            // Kung Thunderstorm, mag-trigger ng random lightning
+            if (weatherMain.includes('thunder')) {
+                triggerLightning(lightning);
+            }
         } else {
             rain.classList.remove('active');
-            localStorage.setItem('iponhub_weather_state', 'clear');
         }
-    } catch (err) {
-        // Fallback: Check local storage para walang delay sa lipat ng page
-        if(localStorage.getItem('iponhub_weather_state') === 'rainy') rain.classList.add('active');
+
+    } catch (error) {
+        console.log("Weather Sync Failed: Offline or API Error");
     }
 }
 
-// Takbo agad pag-load ng page
+// Function para sa random na kidlat
+function triggerLightning(element) {
+    setInterval(() => {
+        if (Math.random() > 0.8) { // 20% chance tuwing 5 seconds
+            element.style.animation = 'flashAnim 0.4s ease-out';
+            setTimeout(() => { element.style.animation = ''; }, 400);
+        }
+    }, 5000);
+}
+
+// Takbo agad pagka-load ng page
 window.addEventListener('DOMContentLoaded', syncIponHubWeather);
+
+// Refresh weather every 10 minutes para laging realtime
+setInterval(syncIponHubWeather, 600000);
