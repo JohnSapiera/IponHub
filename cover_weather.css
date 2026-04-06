@@ -1,44 +1,90 @@
-async function updateIponHubWeather() {
-    const sky = document.getElementById('cebu-sky');
-    const rain = document.getElementById('rain');
-    const lightning = document.getElementById('lightning');
-    
-    if (!sky) return;
+/* ============================================
+   cover_weather.css
+   IponHub — Weather Cover & Cloud Styles
+   ============================================ */
 
-    const hour = new Date().getHours();
-    
-    // 1. Time Logic
-    sky.classList.remove('sky-day', 'sky-sunset', 'sky-night');
-    if (hour >= 18 || hour < 5) sky.classList.add('sky-night');
-    else if (hour >= 16 && hour < 18) sky.classList.add('sky-sunset');
-    else sky.classList.add('sky-day');
-
-    // 2. API Sync
-    try {
-        const resp = await fetch('https://api.openweathermap.org/data/2.5/weather?q=Cebu&appid=da0650965e6d628f844b24131df33246');
-        const data = await resp.json();
-        const condition = data.weather[0].main;
-
-        // Rain/Storm Control
-        if (condition === 'Rain' || condition === 'Drizzle' || condition === 'Thunderstorm') {
-            if (rain) rain.classList.add('active');
-        } else {
-            if (rain) rain.classList.remove('active');
-        }
-
-        // Flash Control
-        if (condition === 'Thunderstorm' && !window.lgtCycle) {
-            window.lgtCycle = setInterval(() => {
-                if (Math.random() > 0.7 && lightning) {
-                    lightning.style.animation = 'flashAnim 0.5s ease-out';
-                    setTimeout(() => lightning.style.animation = '', 500);
-                }
-            }, 4000);
-        }
-    } catch (e) {
-        console.log("Weather Offline - Time Sync Only");
-    }
+/* WEATHER SYSTEM COVER */
+.cover-area {
+    width: 100%;
+    height: 140px;
+    position: relative;
+    z-index: 1;
+    background: linear-gradient(180deg, #40C4FF 0%, #B3E5FC 100%);
+    transition: background 1.5s ease;
+    overflow: hidden;
+    border-bottom: 3px solid var(--white);
 }
 
-updateIponHubWeather();
-setInterval(updateIponHubWeather, 600000);
+/* LIGHTNING */
+.lightning-flash {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: white;
+    opacity: 0;
+    z-index: 10;
+    pointer-events: none;
+}
+
+@keyframes flashAnim {
+    0%  { opacity: 0; }
+    10% { opacity: 0.8; }
+    15% { opacity: 0; }
+    20% { opacity: 0.7; }
+    25% { opacity: 0; }
+}
+
+/* RAIN */
+.rain-layer {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    display: none;
+}
+
+.rain-layer.active {
+    display: block;
+}
+
+.rain-layer::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(to bottom, rgba(255,255,255,0.2) 15%, transparent 15%);
+    background-size: 2px 25px;
+    animation: rainDrop 0.15s linear infinite;
+}
+
+@keyframes rainDrop {
+    from { transform: translateY(-25px); }
+    to   { transform: translateY(25px); }
+}
+
+/* CLOUDS */
+.vector-cloud {
+    position: absolute;
+    background: var(--white);
+    border-radius: 50px;
+    box-shadow: inset 0 -15px 0 var(--cloud-shadow);
+    animation: vectorMove var(--speed) linear infinite;
+}
+
+.vector-cloud::before,
+.vector-cloud::after {
+    content: '';
+    position: absolute;
+    background: inherit;
+    border-radius: 50%;
+    box-shadow: inherit;
+}
+
+.v1            { width: 180px; height: 60px; top: 15%; --speed: 35s; left: -200px; }
+.v1::before    { width: 90px;  height: 90px; top: -50px; left: 30px; }
+.v1::after     { width: 70px;  height: 70px; top: -30px; right: 20px; }
+
+@keyframes vectorMove {
+    from { transform: translateX(-100px); }
+    to   { transform: translateX(calc(100vw + 300px)); }
+}
