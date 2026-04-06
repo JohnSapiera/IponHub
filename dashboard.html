@@ -7,6 +7,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
+    <!-- Weather Cover Styles -->
+    <link rel="stylesheet" href="cover_weather.css">
+
     <style>
         :root {
             --white: #ffffff;
@@ -31,115 +34,14 @@
             overflow-x: hidden;
         }
 
-        /* WEATHER SYSTEM COVER */
-        .cover-area {
-            width: 100%;
-            height: 140px;
-            position: relative;
-            z-index: 1;
-            background: linear-gradient(180deg, #40C4FF 0%, #B3E5FC 100%);
-            transition: background 1.5s ease;
-            overflow: hidden;
-            border-bottom: 3px solid var(--white);
-        }
-
-        .lightning-flash {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: white;
-            opacity: 0;
-            z-index: 10;
-            pointer-events: none;
-        }
-
-        @keyframes flashAnim {
-            0%   { opacity: 0; }
-            10%  { opacity: 0.8; }
-            15%  { opacity: 0; }
-            20%  { opacity: 0.7; }
-            25%  { opacity: 0; }
-        }
-
-        .rain-layer {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            z-index: 2;
-            display: none;
-        }
-
-        .rain-layer.active {
-            display: block;
-        }
-
-        .rain-layer::before {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.2) 15%, transparent 15%);
-            background-size: 2px 25px;
-            animation: rainDrop 0.15s linear infinite;
-        }
-
-        @keyframes rainDrop {
-            from { transform: translateY(-25px); }
-            to   { transform: translateY(25px); }
-        }
-
-        .vector-cloud {
-            position: absolute;
-            background: var(--white);
-            border-radius: 50px;
-            box-shadow: inset 0 -15px 0 var(--cloud-shadow);
-            animation: vectorMove var(--speed) linear infinite;
-        }
-
-        .vector-cloud::before,
-        .vector-cloud::after {
-            content: '';
-            position: absolute;
-            background: inherit;
-            border-radius: 50%;
-            box-shadow: inherit;
-        }
-
-        .v1 {
-            width: 180px;
-            height: 60px;
-            top: 15%;
-            --speed: 35s;
-            left: -200px;
-        }
-
-        .v1::before {
-            width: 90px;
-            height: 90px;
-            top: -50px;
-            left: 30px;
-        }
-
-        .v1::after {
-            width: 70px;
-            height: 70px;
-            top: -30px;
-            right: 20px;
-        }
-
-        @keyframes vectorMove {
-            from { transform: translateX(-100px); }
-            to   { transform: translateX(calc(100vw + 300px)); }
-        }
-
-        /* MINI TABLET */
+        /* TABLET */
         .mini-tablet {
             background: #1A1A1A;
             width: 135px;
             height: 80px;
             border-radius: 14px;
             padding: 5px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
             position: relative;
             z-index: 10;
             margin-top: -40px;
@@ -158,10 +60,7 @@
             border: 0.5px solid #000;
         }
 
-        .brand-wrapper {
-            position: relative;
-            display: inline-block;
-        }
+        .brand-wrapper { position: relative; display: inline-block; }
 
         .brand-name {
             font-family: 'Montserrat', sans-serif;
@@ -175,13 +74,11 @@
 
         .shine-overlay {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             z-index: 2;
             mix-blend-mode: overlay;
-            background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 0) 100%);
+            background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 50%, rgba(255,255,255,0) 100%);
             background-size: 200% 100%;
             animation: brandShine 3s ease-in-out infinite;
         }
@@ -205,24 +102,15 @@
             animation: float 5s ease-in-out infinite;
         }
 
-        .white-stroke {
-            background: var(--white);
-            padding: 2px;
-            border-radius: 47px;
-        }
-
-        .neon-inner-stroke {
-            background: var(--neon-green);
-            padding: 2px;
-            border-radius: 45px;
-        }
+        .white-stroke      { background: var(--white);      padding: 2px; border-radius: 47px; }
+        .neon-inner-stroke { background: var(--neon-green); padding: 2px; border-radius: 45px; }
 
         .dashboard-content {
             background: rgba(255, 255, 255, 0.78);
             backdrop-filter: blur(14px);
             -webkit-backdrop-filter: blur(14px);
             border-radius: 43px;
-            padding: 28px 24px 24px;
+            padding: 28px 24px;
             min-height: 520px;
             display: flex;
             flex-direction: column;
@@ -233,28 +121,20 @@
             50%       { transform: translateY(-12px); }
         }
 
-        .thin-gray-line {
-            width: 100%;
-            height: 1px;
-            background: #e0e0e0;
-        }
+        .thin-gray-line { width: 100%; height: 1px; background: #e0e0e0; }
 
         .balance-amount {
             font-family: 'Montserrat', sans-serif;
             font-size: 36px;
             color: #1a1a1a;
             line-height: 1;
-            margin-top: 5px;
+            margin-top: 6px;
         }
 
-        .balance-amount span {
-            color: var(--brand-green);
-            font-size: 22px;
-        }
+        .balance-amount span { color: var(--brand-green); font-size: 22px; }
 
         .refresh-circle {
-            width: 34px;
-            height: 34px;
+            width: 34px; height: 34px;
             background: white;
             border: 1.5px solid var(--neon-green);
             border-radius: 50%;
@@ -274,20 +154,12 @@
             text-transform: uppercase;
         }
 
-        .btn-cashin {
-            background: var(--brand-green);
-            color: white;
-        }
-
-        .btn-withdraw {
-            border: 2.5px solid var(--brand-green);
-            color: var(--brand-green);
-        }
+        .btn-cashin   { background: var(--brand-green); color: white; }
+        .btn-withdraw { border: 2.5px solid var(--brand-green); color: var(--brand-green); }
 
         /* ICONS */
         .paper-bg {
-            width: 35px;
-            height: 45px;
+            width: 35px; height: 45px;
             background: white;
             border: 1.5px solid #ddd;
             border-radius: 5px;
@@ -299,31 +171,24 @@
             transition: 0.3s;
         }
 
-        .paper-line {
-            height: 2px;
-            background: #eee;
-            border-radius: 2px;
-        }
+        .paper-line { height: 2px; background: #eee; border-radius: 2px; }
 
         .magnifier {
             position: absolute;
-            bottom: 0px;
-            right: 0px;
+            bottom: 0; right: 0;
             transform: scale(0.8);
             transition: 0.4s;
         }
 
         .glass {
-            width: 35px;
-            height: 35px;
+            width: 35px; height: 35px;
             border: 3px solid var(--brand-green);
             background: rgba(57, 255, 20, 0.1);
             border-radius: 50%;
         }
 
         .handle {
-            width: 4px;
-            height: 12px;
+            width: 4px; height: 12px;
             background: var(--brand-green);
             margin-left: 28px;
             margin-top: -2px;
@@ -332,8 +197,7 @@
         }
 
         .coin-icon {
-            width: 50px;
-            height: 50px;
+            width: 50px; height: 50px;
             background: #FBBC05;
             border-radius: 50%;
             border: 3px dashed #B8860B;
@@ -343,15 +207,8 @@
             transition: 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .coin-icon:hover {
-            transform: rotate(360deg) scale(1.1);
-        }
-
-        .peso-sign {
-            font-weight: 900;
-            color: #8B4513;
-            font-size: 22px;
-        }
+        .coin-icon:hover { transform: rotate(360deg) scale(1.1); }
+        .peso-sign { font-weight: 900; color: #8B4513; font-size: 22px; }
 
         /* MODALS */
         .modal-box {
@@ -359,7 +216,7 @@
             width: 100%;
             max-width: 340px;
             border-radius: 40px;
-            padding: 30px 28px;
+            padding: 32px 28px;
             position: relative;
             border: 3px solid var(--neon-green);
         }
@@ -382,24 +239,15 @@
             animation: blinker 1.5s linear infinite;
         }
 
-        @keyframes blinker {
-            50% { opacity: 0.3; }
-        }
+        @keyframes blinker { 50% { opacity: 0.3; } }
 
-        .bar {
-            flex: 1;
-            height: 6px;
-            border-radius: 10px;
-            background: #eee;
-        }
+        .bar { flex: 1; height: 6px; border-radius: 10px; background: #eee; }
 
         .active-red   { background: var(--neon-red);   animation: blink 1s infinite; }
         .active-blue  { background: var(--neon-blue);  animation: blink 1s infinite; }
         .active-green { background: var(--neon-green); }
 
-        @keyframes blink {
-            50% { opacity: 0.5; }
-        }
+        @keyframes blink { 50% { opacity: 0.5; } }
 
         .btn-submit {
             width: 100%;
@@ -436,7 +284,7 @@
         <div class="tablet-screen">
             <div class="brand-wrapper">
                 <div class="brand-name">
-                    Ipon<span style="color: var(--logo-red);">H</span><span style="color: var(--logo-yellow);">u</span><span style="color: var(--logo-blue);">b</span>
+                    Ipon<span style="color:var(--logo-red)">H</span><span style="color:var(--logo-yellow)">u</span><span style="color:var(--logo-blue)">b</span>
                 </div>
                 <div class="shine-overlay"></div>
             </div>
@@ -451,7 +299,7 @@
 
                     <!-- BALANCE -->
                     <div class="wallet-wrap">
-                        <div class="balance-header flex justify-between items-start">
+                        <div class="balance-header flex justify-between">
                             <div>
                                 <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Current Balance</p>
                                 <h1 class="balance-amount"><span>&#8369;</span>1,000,000.00</h1>
@@ -460,14 +308,14 @@
                                 <span class="text-green-600 font-bold">&#8635;</span>
                             </div>
                         </div>
-                        <div class="action-group flex gap-3 mt-5">
+                        <div class="action-group flex gap-3 mt-7">
                             <button onclick="openModal('cashinModal')" class="btn-dash btn-cashin shadow-lg">Cash In</button>
                             <button class="btn-dash btn-withdraw">Withdrawal</button>
                         </div>
                     </div>
 
-                    <!-- ICONS ROW -->
-                    <div class="flex items-center gap-8 mt-8 px-1">
+                    <!-- ICONS -->
+                    <div class="flex items-center gap-8 mt-10 ml-1">
                         <div onclick="openModal('prospectingModal')" class="flex flex-col items-start cursor-pointer group">
                             <div class="relative w-16 h-16 flex items-center justify-center">
                                 <div class="paper-bg">
@@ -495,7 +343,7 @@
                     </div>
 
                     <!-- HOME INDICATOR -->
-                    <div class="mt-auto pb-4 opacity-30 text-center">
+                    <div class="mt-auto pb-4 text-center opacity-30">
                         <div class="w-16 h-1.5 bg-gray-400 rounded-full mx-auto"></div>
                     </div>
 
@@ -504,7 +352,7 @@
         </div>
     </div>
 
-    <!-- MODAL: CASH IN -->
+    <!-- CASH IN MODAL -->
     <div id="cashinModal" class="fixed inset-0 z-[100] hidden bg-black/50 backdrop-blur-sm items-center justify-center p-5">
         <div class="modal-box">
             <span class="absolute right-6 top-6 text-2xl text-gray-300 cursor-pointer" onclick="closeModal('cashinModal')">&times;</span>
@@ -520,7 +368,7 @@
                 <div id="refGroup" class="hidden">
                     <input type="text" id="refNum" class="w-full p-4 rounded-xl border-2 border-gray-100 font-bold outline-none" placeholder="Reference Number" oninput="validateForm()">
                 </div>
-                <div class="flex gap-1 mt-4 items-center">
+                <div class="flex gap-1 mt-4">
                     <div id="bar1" class="bar"></div>
                     <div id="bar2" class="bar"></div>
                     <div id="bar3" class="bar"></div>
@@ -531,7 +379,7 @@
         </div>
     </div>
 
-    <!-- MODAL: PROSPECTING -->
+    <!-- PROSPECTING MODAL -->
     <div id="prospectingModal" class="fixed inset-0 z-[100] hidden bg-black/50 backdrop-blur-sm items-center justify-center p-5">
         <div class="modal-box">
             <span class="absolute right-6 top-6 text-2xl text-gray-300 cursor-pointer" onclick="closeModal('prospectingModal')">&times;</span>
@@ -560,7 +408,7 @@
         </div>
     </div>
 
-    <!-- MODAL: DEALS -->
+    <!-- DEALS MODAL -->
     <div id="dealsModal" class="fixed inset-0 z-[100] hidden bg-black/50 backdrop-blur-sm items-center justify-center p-5">
         <div class="modal-box">
             <span class="absolute right-6 top-6 text-2xl text-gray-300 cursor-pointer" onclick="closeModal('dealsModal')">&times;</span>
@@ -593,6 +441,7 @@
         </div>
     </div>
 
+    <!-- Modal + Form JS -->
     <script>
         function openModal(id) {
             document.getElementById(id).classList.remove('hidden');
@@ -605,10 +454,9 @@
         }
 
         function validateForm() {
-            const g = document.getElementById('gcashNum').value;
-            const a = document.getElementById('amountVal').value;
-            const r = document.getElementById('refNum').value;
-
+            const g   = document.getElementById('gcashNum').value;
+            const a   = document.getElementById('amountVal').value;
+            const r   = document.getElementById('refNum').value;
             const b1  = document.getElementById('bar1');
             const b2  = document.getElementById('bar2');
             const b3  = document.getElementById('bar3');
@@ -626,67 +474,34 @@
                 b1.classList.add('active-green');
                 b2.classList.add('active-green');
                 b3.classList.add('active-green');
-                st.innerText = '3/3';
-                st.style.color = '#39FF14';
-                btn.className = 'btn-submit ready border-neon-green text-green-600 bg-green-50';
-                btn.innerText = 'CONFIRM';
+                st.innerText = "3/3";
+                st.style.color = "#39FF14";
+                btn.className = "btn-submit ready border-neon-green text-green-600 bg-green-50";
+                btn.innerText = "CONFIRM";
             } else if (a.length >= 3) {
                 b1.classList.add('active-blue');
                 b2.classList.add('active-blue');
-                st.innerText = '2/3';
-                st.style.color = '#00E5FF';
-                btn.className = 'btn-submit ready border-[#00E5FF] text-[#00B8D4] bg-cyan-50';
-                btn.innerText = 'SUBMIT';
+                st.innerText = "2/3";
+                st.style.color = "#00E5FF";
+                btn.className = "btn-submit ready border-[#00E5FF] text-[#00B8D4] bg-cyan-50";
+                btn.innerText = "SUBMIT";
             } else if (g.length > 0) {
                 b1.classList.add('active-red');
-                st.innerText = '1/3';
-                st.style.color = '#FF3D00';
-                btn.className = 'btn-submit border-[#FF3D00] text-[#FF3D00] bg-red-50';
-                btn.innerText = 'INCOMPLETE';
+                st.innerText = "1/3";
+                st.style.color = "#FF3D00";
+                btn.className = "btn-submit border-[#FF3D00] text-[#FF3D00] bg-red-50";
+                btn.innerText = "INCOMPLETE";
             }
         }
 
         function confirmPayment() {
-            alert('Payment Successful!');
+            alert("Payment Successful!");
             closeModal('cashinModal');
         }
-
-        // WEATHER SYSTEM
-        async function updateWeather() {
-            const sky       = document.getElementById('cebu-sky');
-            const rain      = document.getElementById('rain');
-            const lightning = document.getElementById('lightning');
-
-            const hour     = new Date().getHours();
-            const isNight  = (hour >= 18 || hour < 5);
-            const isSunset = (hour >= 16 && hour < 18);
-
-            if (isNight)       sky.style.background = 'linear-gradient(180deg, #0B0E14 0%, #1A237E 100%)';
-            else if (isSunset) sky.style.background = 'linear-gradient(180deg, #E64A19 0%, #FFB74D 100%)';
-            else               sky.style.background = 'linear-gradient(180deg, #40C4FF 0%, #B3E5FC 100%)';
-
-            try {
-                const resp      = await fetch('https://api.openweathermap.org/data/2.5/weather?q=Cebu&appid=da0650965e6d628f844b24131df33246');
-                const data      = await resp.json();
-                const condition = data.weather[0].main;
-
-                if (condition === 'Rain' || condition === 'Drizzle' || condition === 'Thunderstorm') {
-                    rain.classList.add('active');
-                    if (condition === 'Thunderstorm') {
-                        setInterval(() => {
-                            if (Math.random() > 0.8) {
-                                lightning.style.animation = 'flashAnim 0.4s ease-out';
-                                setTimeout(() => { lightning.style.animation = ''; }, 400);
-                            }
-                        }, 5000);
-                    }
-                }
-            } catch (e) {
-                console.log('Weather Offline');
-            }
-        }
-
-        updateWeather();
     </script>
+
+    <!-- Weather JS (separate file) -->
+    <script src="weather.js"></script>
+
 </body>
 </html>
