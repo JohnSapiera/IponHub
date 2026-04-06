@@ -22,26 +22,68 @@
             --neon-red: #FF3D00;
         }
 
-        body { font-family: 'Inter', sans-serif; background-color: var(--white); min-height: 100vh; display: flex; flex-direction: column; align-items: center; margin: 0; overflow-x: hidden; }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: var(--white); 
+            min-height: 100vh; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            margin: 0; 
+            overflow-x: hidden; 
+        }
+
+        /* 🌦️ COVER AREA FIX - MUST BE BEHIND EVERYTHING */
+        .cover-area {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1; /* Nasa pinaka-likod */
+            pointer-events: none; /* Hindi nito haharangin ang clicks sa buttons */
+        }
 
         /* 📱 TABLET LOGO */
-        .mini-tablet { background: #1A1A1A; width: 135px; height: 80px; border-radius: 14px; padding: 5px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); position: relative; z-index: 50; margin-top: -40px; }
+        .mini-tablet { 
+            background: #1A1A1A; 
+            width: 135px; 
+            height: 80px; 
+            border-radius: 14px; 
+            padding: 5px; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2); 
+            position: relative; 
+            z-index: 50; 
+            margin-top: -40px; 
+        }
         .tablet-screen { background: var(--white); width: 100%; height: 100%; border-radius: 10px; display: flex; justify-content: center; align-items: center; position: relative; overflow: hidden; border: 0.5px solid #000; }
         .brand-name { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 22px; letter-spacing: -1.5px; color: var(--brand-green); position: relative; z-index: 1; }
         .shine-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2; mix-blend-mode: overlay; background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 50%, rgba(255,255,255,0) 100%); background-size: 200% 100%; animation: brandShine 3s ease-in-out infinite; }
         @keyframes brandShine { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
 
         /* 📱 IPHONE FRAME */
-        .iphone-frame { width: 92%; max-width: 360px; margin-top: 20px; padding: 4px; background: var(--neon-green); border-radius: 50px; box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.15); position: relative; animation: float 5s ease-in-out infinite; z-index: 40; }
+        .iphone-frame { 
+            width: 92%; 
+            max-width: 360px; 
+            margin-top: 20px; 
+            padding: 4px; 
+            background: var(--neon-green); 
+            border-radius: 50px; 
+            box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.15); 
+            position: relative; 
+            animation: float 5s ease-in-out infinite; 
+            z-index: 40; /* Mas mataas kaysa sa cover area */
+        }
         .white-stroke { background: var(--white); padding: 2px; border-radius: 47px; }
         .neon-inner-stroke { background: var(--neon-green); padding: 2px; border-radius: 45px; }
-        .dashboard-content { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); border-radius: 43px; padding: 25px 22px; min-height: 520px; display: flex; flex-direction: column; }
+        .dashboard-content { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-radius: 43px; padding: 25px 22px; min-height: 520px; display: flex; flex-direction: column; }
         @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-12px); } }
 
         /* UI ELEMENTS */
         .balance-amount { font-family: 'Montserrat', sans-serif; font-size: 36px; color: #1a1a1a; line-height: 1; margin-top: 5px; }
         .balance-amount span { color: var(--brand-green); font-size: 22px; }
-        .btn-dash { flex: 1; padding: 15px; border-radius: 18px; font-weight: 800; font-size: 13px; text-transform: uppercase; }
+        .btn-dash { flex: 1; padding: 15px; border-radius: 18px; font-weight: 800; font-size: 13px; text-transform: uppercase; transition: 0.2s; }
+        .btn-dash:active { transform: scale(0.95); }
         .btn-cashin { background: var(--brand-green); color: white; }
         .btn-withdraw { border: 2.5px solid var(--brand-green); color: var(--brand-green); }
 
@@ -56,7 +98,7 @@
         /* MODAL FIX */
         .bar { flex: 1; height: 6px; border-radius: 10px; background: #eee; }
         .active-green { background: var(--neon-green); }
-        .btn-submit { width: 100%; margin-top: 20px; padding: 16px; border-radius: 18px; font-weight: 800; opacity: 0.4; pointer-events: none; }
+        .btn-submit { width: 100%; margin-top: 20px; padding: 16px; border-radius: 18px; font-weight: 800; opacity: 0.4; pointer-events: none; transition: 0.3s; }
         .btn-submit.ready { opacity: 1; pointer-events: auto; }
     </style>
 </head>
@@ -94,10 +136,10 @@
                                 <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Balance</p>
                                 <h1 class="balance-amount"><span>₱</span>1,000,000.00</h1>
                             </div>
-                            <div onclick="location.reload()" class="w-8 h-8 rounded-full border border-green-500 flex items-center justify-center cursor-pointer text-green-600">↻</div>
+                            <div onclick="location.reload()" class="w-8 h-8 rounded-full border border-green-500 flex items-center justify-center cursor-pointer text-green-600 active:bg-green-50">↻</div>
                         </div>
                         <div class="flex gap-3 mt-6">
-                            <button onclick="openModal('cashinModal')" class="btn-dash btn-cashin">Cash In</button>
+                            <button onclick="openModal('cashinModal')" class="btn-dash btn-cashin shadow-md">Cash In</button>
                             <button class="btn-dash btn-withdraw">Withdraw</button>
                         </div>
                     </div>
@@ -105,14 +147,14 @@
                     <div class="flex items-center gap-8 mt-10 ml-1">
                         <div onclick="openModal('prospectingModal')" class="flex flex-col items-center cursor-pointer group">
                             <div class="relative w-16 h-16 flex items-center justify-center">
-                                <div class="paper-bg"><div class="paper-line w-6"></div><div class="paper-line w-4"></div><div class="paper-line w-7"></div></div>
-                                <div class="magnifier"><div class="glass"></div><div class="handle"></div></div>
+                                <div class="paper-bg group-hover:rotate-0"><div class="paper-line w-6"></div><div class="paper-line w-4"></div><div class="paper-line w-7"></div></div>
+                                <div class="magnifier group-hover:scale-110"><div class="glass"></div><div class="handle"></div></div>
                             </div>
-                            <p class="text-[9px] font-black text-gray-400 mt-2 uppercase">Prospecting</p>
+                            <p class="text-[9px] font-black text-gray-400 mt-2 uppercase tracking-tighter group-hover:text-green-500">Prospecting</p>
                         </div>
-                        <div onclick="openModal('dealsModal')" class="flex flex-col items-center cursor-pointer">
-                            <div class="coin-icon"><span class="font-black text-[#8B4513] text-xl">₱</span></div>
-                            <p class="text-[9px] font-black text-gray-400 mt-2 uppercase">My Deals</p>
+                        <div onclick="openModal('dealsModal')" class="flex flex-col items-center cursor-pointer group">
+                            <div class="coin-icon group-hover:scale-110"><span class="font-black text-[#8B4513] text-xl">₱</span></div>
+                            <p class="text-[9px] font-black text-gray-400 mt-2 uppercase tracking-tighter group-hover:text-yellow-600">My Deals</p>
                         </div>
                     </div>
 
@@ -127,27 +169,41 @@
         </div>
     </div>
 
-    <div id="cashinModal" class="fixed inset-0 z-[100] hidden bg-black/50 backdrop-blur-sm items-center justify-center p-5">
+    <div id="cashinModal" class="fixed inset-0 z-[100] hidden bg-black/60 backdrop-blur-sm items-center justify-center p-5">
         <div class="bg-white w-full max-w-[340px] rounded-[40px] p-8 relative border-2 border-[#39FF14]">
             <span class="absolute right-6 top-6 text-2xl text-gray-300 cursor-pointer" onclick="closeModal('cashinModal')">&times;</span>
-            <h2 class="text-center font-black text-gray-800 mb-6 uppercase">GCash Cash In</h2>
+            <h2 class="text-center font-black text-gray-800 mb-6 uppercase tracking-tight">GCash Cash In</h2>
             <div class="space-y-4">
-                <input type="number" id="gcashNum" class="w-full p-4 rounded-xl bg-gray-50 outline-none" placeholder="GCash Number" oninput="validateForm()">
-                <input type="number" id="amountVal" class="hidden w-full p-4 rounded-xl bg-gray-50 outline-none" placeholder="Amount" oninput="validateForm()">
-                <button id="submitBtn" class="btn-submit bg-gray-100 text-gray-400" onclick="alert('Success!')">SUBMIT</button>
+                <input type="number" id="gcashNum" class="w-full p-4 rounded-xl bg-gray-50 outline-none font-bold" placeholder="GCash Number" oninput="validateForm()">
+                <input type="number" id="amountVal" class="hidden w-full p-4 rounded-xl bg-gray-50 outline-none font-bold" placeholder="Amount" oninput="validateForm()">
+                <button id="submitBtn" class="btn-submit bg-gray-100 text-gray-400" onclick="alert('✅ Transaction processing...')">SUBMIT</button>
             </div>
         </div>
     </div>
 
     <script>
-        function openModal(id) { document.getElementById(id).classList.remove('hidden'); document.getElementById(id).classList.add('flex'); }
-        function closeModal(id) { document.getElementById(id).classList.add('hidden'); document.getElementById(id).classList.remove('flex'); }
+        function openModal(id) { 
+            const el = document.getElementById(id);
+            el.classList.remove('hidden'); 
+            el.classList.add('flex'); 
+        }
+        function closeModal(id) { 
+            const el = document.getElementById(id);
+            el.classList.add('hidden'); 
+            el.classList.remove('flex'); 
+        }
         function validateForm() {
             const g = document.getElementById('gcashNum').value;
             const a = document.getElementById('amountVal');
             const btn = document.getElementById('submitBtn');
             if (g.length >= 11) { a.classList.remove('hidden'); }
-            if (a.value.length >= 2) { btn.classList.add('ready'); btn.className="btn-submit ready bg-green-500 text-white"; }
+            if (a.value.length >= 2) { 
+                btn.classList.add('ready'); 
+                btn.className="btn-submit ready bg-green-500 text-white shadow-lg"; 
+            } else {
+                btn.classList.remove('ready');
+                btn.className="btn-submit bg-gray-100 text-gray-400";
+            }
         }
     </script>
 
