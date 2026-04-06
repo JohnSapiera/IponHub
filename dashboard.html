@@ -80,7 +80,6 @@
             <div class="qr-placeholder" style="width: 150px; height: 150px; margin: 0 auto; border: 2px dashed #ddd; border-radius: 15px; overflow: hidden;">
                 <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=JeromeIponHub" alt="QR" class="w-full h-full object-cover">
             </div>
-            <p class="text-center text-[11px] font-bold text-gray-600 mt-2">Jer*****on V.</p>
             <div class="mt-6 space-y-4">
                 <input type="number" id="gcashNum" class="input-field" placeholder="GCash Number" oninput="validateForm()">
                 <div id="amountGroup" class="hidden">
@@ -88,12 +87,6 @@
                 </div>
                 <div id="refGroup" class="hidden">
                     <input type="text" id="refNum" class="input-field" placeholder="Reference Number" oninput="validateForm()">
-                </div>
-                <div class="flex gap-1.5 mt-5">
-                    <div id="bar1" class="bar"></div>
-                    <div id="bar2" class="bar"></div>
-                    <div id="bar3" class="bar"></div>
-                    <span id="stepText" class="text-[10px] font-black text-gray-300 ml-2">0/3</span>
                 </div>
                 <button id="submitBtn" class="btn-submit" onclick="confirmPayment()">SUBMIT</button>
             </div>
@@ -103,23 +96,17 @@
     <div id="prospectingModal">
         <div class="modal-box">
             <span class="absolute right-6 top-6 text-2xl text-gray-300 cursor-pointer" onclick="closeModal('prospectingModal')">&times;</span>
-            <div class="text-center mb-6">
-                <h2 class="font-bold text-gray-800 text-lg uppercase tracking-widest">Prospecting</h2>
-                <div class="w-12 h-1 bg-green-500 mx-auto mt-1 rounded-full"></div>
-            </div>
-            <div class="max-h-[300px] overflow-y-auto pr-1">
+            <h2 class="font-bold text-gray-800 text-lg uppercase tracking-widest text-center mb-4">Prospecting</h2>
+            <div class="max-h-[300px] overflow-y-auto">
                 <div class="glass-oblong">
                     <p class="deal-title">Project: Sari-Sari Store Expansion</p>
                     <p class="deal-status">● Potential Profit: 15% Monthly</p>
-                </div>
-                <div class="glass-oblong">
-                    <p class="deal-title">Real Estate: Low-Cost Housing</p>
-                    <p class="deal-status" style="color:var(--logo-blue)">● Reviewing Documents</p>
                 </div>
             </div>
         </div>
     </div>
 
     <script src="dashboard.js"></script>
+
 </body>
 </html>
