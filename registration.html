@@ -23,16 +23,16 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', sans-serif; background-color: #f8f9fa; min-height: 100vh; display: flex; flex-direction: column; align-items: center; overflow-x: hidden; }
 
-        /* 🌦️ 4D WEATHER COVER (CEBU SYNC) */
+        /* 🌦️ COMPACT WEATHER COVER */
         .cover-area {
-            width: 100%; height: 160px; position: relative; z-index: 1;
-            border-top: 5px solid var(--white); border-bottom: 5px solid var(--white);
+            width: 100%; height: 130px; position: relative; z-index: 1;
+            border-top: 4px solid var(--white); border-bottom: 4px solid var(--white);
             background: linear-gradient(180deg, var(--sky-top) 0%, var(--sky-bottom) 100%);
             overflow: hidden; transition: all 1.5s ease;
         }
 
         .lightning-flash { position: absolute; width: 100%; height: 100%; background: white; opacity: 0; z-index: 10; pointer-events: none; }
-        @keyframes flashAnim { 0% { opacity: 0; } 10% { opacity: 0.8; } 15% { opacity: 0; } 20% { opacity: 0.7; } 25% { opacity: 0; } }
+        @keyframes flashAnim { 0% { opacity: 0; } 10% { opacity: 0.8; } 20% { opacity: 0.7; } 25% { opacity: 0; } }
 
         .rain-layer { position: absolute; width: 100%; height: 100%; z-index: 2; display: none; }
         .rain-layer.active { display: block; }
@@ -45,69 +45,63 @@
 
         .vector-cloud {
             position: absolute; background: var(--white); border-radius: 50px;
-            box-shadow: inset 0 -15px 0 var(--cloud-shadow); animation: vectorMove var(--speed) linear infinite;
+            box-shadow: inset 0 -12px 0 var(--cloud-shadow); animation: vectorMove var(--speed) linear infinite;
         }
         .vector-cloud::before, .vector-cloud::after { content: ''; position: absolute; background: inherit; border-radius: 50%; box-shadow: inherit; }
-        .v1 { width: 180px; height: 60px; top: 15%; --speed: 35s; left: -200px; }
-        .v1::before { width: 90px; height: 90px; top: -50px; left: 30px; }
-        .v1::after { width: 70px; height: 70px; top: -30px; right: 20px; }
+        .v1 { width: 140px; height: 45px; top: 15%; --speed: 35s; left: -200px; }
+        .v1::before { width: 70px; height: 70px; top: -35px; left: 20px; }
+        .v1::after { width: 50px; height: 50px; top: -20px; right: 15px; }
         @keyframes vectorMove { from { transform: translateX(-100px); } to { transform: translateX(calc(100vw + 300px)); } }
 
-        /* 📱 TABLET & BRAND SHINE */
-        .mini-tablet { background: #1A1A1A; width: 138px; height: 82px; border-radius: 12px; padding: 5px; box-shadow: 0 15px 35px rgba(0,0,0,0.4); display: flex; justify-content: center; align-items: center; position: relative; z-index: 5; margin-top: -41px; }
-        .tablet-screen { background: var(--white); width: 100%; height: 100%; border-radius: 9px; display: flex; justify-content: center; align-items: center; border: 0.5px solid #000; overflow: hidden; position: relative; }
-        
-        .brand-wrapper { position: relative; display: inline-block; }
-        .brand-name { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 25px; letter-spacing: -1.5px; color: var(--brand-green); position: relative; z-index: 1; }
+        /* 📱 COMPACT TABLET */
+        .mini-tablet { background: #1A1A1A; width: 110px; height: 60px; border-radius: 10px; padding: 4px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); display: flex; justify-content: center; align-items: center; position: relative; z-index: 5; margin-top: -30px; }
+        .tablet-screen { background: var(--white); width: 100%; height: 100%; border-radius: 6px; display: flex; justify-content: center; align-items: center; border: 0.5px solid #000; overflow: hidden; position: relative; }
+        .brand-name { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 18px; letter-spacing: -1px; color: var(--brand-green); }
         .brand-name .h-red { color: var(--logo-red); }
         .brand-name .u-yellow { color: var(--logo-yellow); }
         .brand-name .b-blue { color: var(--logo-blue); }
-        
-        .shine-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2; mix-blend-mode: overlay; background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0) 40%, rgba(255,255,255,1) 50%, rgba(255,255,255,0) 60%, rgba(255,255,255,0) 100%); background-size: 200% 100%; animation: brandShine 3s ease-in-out infinite; }
-        @keyframes brandShine { 0% { background-position: 200% 0; } 45% { background-position: -100% 0; } 100% { background-position: -100% 0; } }
+        .shine-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2; mix-blend-mode: overlay; background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 50%, rgba(255,255,255,0) 100%); background-size: 200% 100%; animation: brandShine 3s ease-in-out infinite; }
+        @keyframes brandShine { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
 
-        /* 📦 REMASTERED REGISTRATION FORM */
+        /* 📦 COMPACT REGISTER FORM */
         .register-outer-layer {
-            width: 92%; max-width: 400px;
-            margin-top: 40px; margin-bottom: 50px;
-            background: var(--neon-green); padding: 4px; border-radius: 24px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1); z-index: 10;
+            width: 90%; max-width: 360px;
+            margin-top: 20px; margin-bottom: 30px;
+            background: var(--neon-green); padding: 3px; border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1); z-index: 10;
         }
 
-        .login-container { background: var(--white); border-radius: 20px; overflow: hidden; }
-        .form-banner { padding: 30px 20px 10px 20px; text-align: center; }
-        .form-banner h2 { font-family: 'Montserrat', sans-serif; font-size: 18px; color: #333; margin-bottom: 5px; }
-        .form-banner p { font-size: 12px; color: #7f8c8d; }
+        .login-container { background: var(--white); border-radius: 18px; overflow: hidden; }
+        .form-banner { padding: 20px 20px 5px 20px; text-align: center; }
+        .form-banner h2 { font-family: 'Montserrat', sans-serif; font-size: 16px; color: #333; margin-bottom: 3px; }
+        .form-banner p { font-size: 11px; color: #7f8c8d; }
 
-        .form-content { padding: 20px 25px 30px 25px; }
-        .input-group { margin-bottom: 15px; }
-        .input-group label { display: block; font-size: 10px; font-weight: 700; margin-bottom: 6px; text-transform: uppercase; color: #95A5A6; }
-        .form-control { width: 100%; padding: 12px; border: 1.5px solid #E5E7EB; border-radius: 10px; background-color: #F9FAFB; font-size: 14px; outline: none; transition: 0.2s; }
+        .form-content { padding: 15px 20px 20px 20px; }
+        .input-group { margin-bottom: 10px; }
+        .input-group label { display: block; font-size: 9px; font-weight: 700; margin-bottom: 4px; text-transform: uppercase; color: #95A5A6; }
+        .form-control { width: 100%; padding: 10px; border: 1.5px solid #E5E7EB; border-radius: 8px; background-color: #F9FAFB; font-size: 14px; outline: none; }
         .form-control:focus { border-color: var(--brand-green); background-color: #fff; }
 
-        /* Referral UI */
-        #ref-trigger { color: var(--brand-green); font-size: 12px; font-weight: 700; cursor: pointer; display: block; margin: 10px 0; text-decoration: underline; }
+        #ref-trigger { color: var(--brand-green); font-size: 11px; font-weight: 700; cursor: pointer; display: block; margin: 8px 0; text-decoration: underline; }
         #ref-field { display: none; }
-        #no-ref-link { display: block; font-size: 11px; color: var(--error-red); cursor: pointer; text-align: right; margin-top: 4px; font-weight: 600; }
+        #no-ref-link { display: block; font-size: 10px; color: var(--error-red); cursor: pointer; text-align: right; margin-top: 2px; font-weight: 600; }
 
-        /* Terms */
-        .terms-group { display: flex; align-items: flex-start; gap: 10px; font-size: 12px; margin: 15px 0; color: #7F8C8D; }
-        .terms-group input { width: 16px; height: 16px; accent-color: var(--brand-green); }
+        .terms-group { display: flex; align-items: center; gap: 8px; font-size: 11px; margin: 12px 0; color: #7F8C8D; }
+        .terms-group input { width: 14px; height: 14px; accent-color: var(--brand-green); }
         #u-terms-link { color: var(--brand-green); font-weight: 700; text-decoration: underline; cursor: pointer; }
 
-        .btn-register { width: 100%; padding: 16px; background-color: var(--brand-green); color: white; border: none; border-radius: 12px; font-size: 16px; font-family: 'Montserrat', sans-serif; font-weight: 700; cursor: pointer; box-shadow: 0 4px 15px rgba(46, 125, 50, 0.2); }
+        .btn-register { width: 100%; padding: 14px; background-color: var(--brand-green); color: white; border: none; border-radius: 10px; font-size: 15px; font-family: 'Montserrat', sans-serif; font-weight: 700; cursor: pointer; }
         .btn-register:active { transform: scale(0.98); }
 
-        .form-footer { text-align: center; padding: 25px; font-size: 13px; background: #F9F9F9; border-top: 1px solid #EEE; }
+        .form-footer { text-align: center; padding: 15px; font-size: 12px; background: #F9F9F9; border-top: 1px solid #EEE; }
         .form-footer a { color: var(--brand-green); text-decoration: none; font-weight: 700; }
-        #error-msg { color: var(--error-red); font-size: 10px; font-weight: 700; margin-top: 5px; display: none; }
+        #error-msg { color: var(--error-red); font-size: 9px; font-weight: 700; margin-top: 3px; display: none; }
 
-        /* 📜 Modal Styling */
-        .modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); backdrop-filter: blur(3px); }
-        .modal-content { background-color: #fff; margin: 15% auto; width: 90%; max-width: 380px; border-radius: 16px; overflow: hidden; }
-        .modal-header { background: var(--brand-green); color: white; padding: 15px; display: flex; justify-content: space-between; align-items: center; }
-        .modal-body { padding: 20px; max-height: 300px; overflow-y: auto; font-size: 13px; line-height: 1.6; }
-        .btn-close-modal { width: 100%; padding: 12px; background: var(--brand-green); color: white; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; }
+        .modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); backdrop-filter: blur(2px); }
+        .modal-content { background-color: #fff; margin: 20% auto; width: 85%; max-width: 320px; border-radius: 12px; overflow: hidden; }
+        .modal-header { background: var(--brand-green); color: white; padding: 12px; text-align: center; }
+        .modal-body { padding: 15px; max-height: 250px; overflow-y: auto; font-size: 12px; line-height: 1.5; }
+        .btn-close-modal { width: 100%; padding: 10px; background: var(--brand-green); color: white; border: none; border-radius: 6px; font-weight: 700; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -117,25 +111,23 @@
         <div class="rain-layer" id="rain"></div>
         <div id="cloud-container">
             <div class="vector-cloud v1"></div>
-            <div class="vector-cloud v1" style="animation-delay: -12s; top: 38%; opacity: 0.7;"></div>
+            <div class="vector-cloud v1" style="animation-delay: -12s; top: 38%; opacity: 0.6;"></div>
         </div>
     </div>
 
     <div class="mini-tablet">
         <div class="tablet-screen">
-            <div class="brand-wrapper">
-                <div class="brand-name">Ipon<span class="h-red">H</span><span class="u-yellow">u</span><span class="b-blue">b</span></div>
-                <div class="shine-overlay"></div>
-            </div>
+            <div class="brand-name">Ipon<span class="h-red">H</span><span class="u-yellow">u</span><span class="b-blue">b</span></div>
+            <div class="shine-overlay"></div>
         </div>
     </div>
 
     <div class="register-outer-layer">
         <div class="login-container">
             <div class="form-banner">
-		<h2>Integrated Savings Solutions. 💼</h2>
-			<p>Professional-grade wealth management starts with a single, disciplined step. Register your account today.</p>
-		</div>
+                <h2>Join IponHub Today 💼</h2>
+                <p>Start your disciplined savings journey.</p>
+            </div>
 
             <div class="form-content">
                 <form id="regForm">
@@ -151,12 +143,12 @@
 
                     <div class="input-group">
                         <label>Password</label>
-                        <input type="password" class="form-control" id="u-pass" required minlength="6" placeholder="At least 6 characters">
+                        <input type="password" class="form-control" id="u-pass" required minlength="6" placeholder="Min. 6 chars">
                     </div>
 
                     <div class="input-group">
                         <label>Confirm Password</label>
-                        <input type="password" class="form-control" id="u-cpass" required placeholder="Re-type password">
+                        <input type="password" class="form-control" id="u-cpass" required placeholder="Confirm pass">
                         <span id="error-msg">⚠️ Passwords do not match!</span>
                     </div>
 
@@ -164,7 +156,7 @@
                     <div class="input-group" id="ref-field">
                         <label>Referral Code</label>
                         <input type="text" class="form-control" id="u-ref" placeholder="Enter code">
-                        <span id="no-ref-link">Ayaw ko na mag-code</span>
+                        <span id="no-ref-link">Remove Code</span>
                     </div>
 
                     <div class="terms-group">
@@ -176,55 +168,61 @@
                 </form>
             </div>
 
-            <div class="form-footer">
-                May account ka na? <a href="index.html">Mag-login dito</a>
-            </div>
+            <div class="form-footer">May account ka na? <a href="index.html">Login</a></div>
         </div>
     </div>
 
     <div id="tos-modal" class="modal">
         <div class="modal-content">
-            <div class="modal-header">
-                <h3>Terms of Service</h3>
-            </div>
+            <div class="modal-header"><h3>Terms of Service</h3></div>
             <div class="modal-body">
                 <p>1. <strong>One Account:</strong> Isang account lang bawat tao.</p>
-                <p>2. <strong>Savings:</strong> Ang benefits ay makukuha pagkatapos ng cycle.</p>
-                <p>3. <strong>Privacy:</strong> Secured ang data mo sa IponHub.</p>
+                <p>2. <strong>Cycle:</strong> Benefits are released after the cycle.</p>
+                <p>3. <strong>Privacy:</strong> Your data is secured.</p>
             </div>
-            <div style="padding:15px">
-                <button type="button" class="btn-close-modal" id="agree-btn">NAINTINDIHAN KO</button>
-            </div>
+            <div style="padding:12px"><button type="button" class="btn-close-modal" id="agree-btn">OK</button></div>
         </div>
     </div>
 
     <script>
-        // --- CEBU WEATHER ENGINE ---
         async function updateWeather() {
             const sky = document.getElementById('cebu-sky');
             const rain = document.getElementById('rain');
             const lightning = document.getElementById('lightning');
+            
+            // 1. REALTIME TIME CHECK (Sunset ready @ 4:58 PM)
+            const hour = new Date().getHours();
+            let isNight = (hour >= 18 || hour < 5);
+            let isSunset = (hour >= 16 && hour < 18);
+
+            if (isNight) {
+                sky.style.background = "linear-gradient(180deg, #0B0E14 0%, #1A237E 100%)";
+            } else if (isSunset) {
+                sky.style.background = "linear-gradient(180deg, #E64A19 0%, #FFB74D 100%)";
+            } else {
+                sky.style.background = "linear-gradient(180deg, #40C4FF 0%, #B3E5FC 100%)";
+            }
+
+            // 2. WEATHER API SYNC
             try {
                 const resp = await fetch('https://api.openweathermap.org/data/2.5/weather?q=Cebu&appid=da0650965e6d628f844b24131df33246');
                 const data = await resp.json();
                 const condition = data.weather[0].main; 
-                const hour = new Date().getHours();
-                let isNight = (hour >= 18 || hour < 5);
-                
-                if (isNight) sky.style.background = "linear-gradient(180deg, #0B0E14 0%, #1A237E 100%)";
-                else if (hour >= 16) sky.style.background = "linear-gradient(180deg, #E64A19 0%, #FFB74D 100%)";
-                
+
                 if (condition === 'Rain' || condition === 'Drizzle' || condition === 'Thunderstorm') {
                     rain.classList.add('active');
-                    if(condition === 'Thunderstorm') {
-                        setInterval(() => { if (Math.random() > 0.8) { lightning.style.animation = 'flashAnim 0.4s ease-out'; setTimeout(() => lightning.style.animation = '', 400); } }, 5000);
+                    if(condition === 'Thunderstorm' && !window.lTimer) {
+                        window.lTimer = setInterval(() => { if (Math.random() > 0.8) { lightning.style.animation = 'flashAnim 0.4s ease-out'; setTimeout(() => lightning.style.animation = '', 400); } }, 5000);
                     }
+                } else {
+                    rain.classList.remove('active');
+                    if(window.lTimer) clearInterval(window.lTimer);
                 }
-            } catch (e) { console.log("Weather Offline"); }
+            } catch (e) { console.log("IponHub: Syncing by Time Only"); }
         }
         updateWeather();
 
-        // --- FORM LOGIC ---
+        // FORM UI LOGIC
         const pass = document.getElementById('u-pass');
         const cpass = document.getElementById('u-cpass');
         const errorMsg = document.getElementById('error-msg');
@@ -238,7 +236,6 @@
         function validate() { errorMsg.style.display = (cpass.value.length > 0 && pass.value !== cpass.value) ? 'block' : 'none'; }
         pass.oninput = validate; cpass.oninput = validate;
 
-        // Modal
         const modal = document.getElementById("tos-modal");
         document.getElementById("u-terms-link").onclick = () => modal.style.display = "block";
         document.getElementById("agree-btn").onclick = () => modal.style.display = "none";
