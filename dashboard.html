@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
     <!-- Weather Cover Styles -->
-    <link rel="stylesheet" href="style/cover_weather.css">
+    <link rel="stylesheet" href="css/cover_weather.css">
 
     <style>
         :root {
@@ -157,7 +157,7 @@
         .btn-cashin   { background: var(--brand-green); color: white; }
         .btn-withdraw { border: 2.5px solid var(--brand-green); color: var(--brand-green); }
 
-        /* ICONS */
+        /* ── PROSPECTING ICON ── */
         .paper-bg {
             width: 35px; height: 45px;
             background: white;
@@ -177,7 +177,20 @@
             position: absolute;
             bottom: 0; right: 0;
             transform: scale(0.8);
-            transition: 0.4s;
+            transition: transform 0.4s ease, bottom 0.4s ease, right 0.4s ease;
+        }
+
+        /* Magnifier scan animation on hover */
+        .group:hover .magnifier {
+            animation: scanPaper 1s ease-in-out infinite alternate;
+        }
+
+        @keyframes scanPaper {
+            0%   { bottom: 2px;  right: 2px;  transform: scale(0.85) rotate(-5deg); }
+            25%  { bottom: 10px; right: 2px;  transform: scale(0.85) rotate(0deg); }
+            50%  { bottom: 18px; right: 8px;  transform: scale(0.85) rotate(5deg); }
+            75%  { bottom: 10px; right: 14px; transform: scale(0.85) rotate(0deg); }
+            100% { bottom: 2px;  right: 8px;  transform: scale(0.85) rotate(-5deg); }
         }
 
         .glass {
@@ -196,6 +209,7 @@
             border-radius: 4px;
         }
 
+        /* ── DEALS ICON ── */
         .coin-icon {
             width: 50px; height: 50px;
             background: #FBBC05;
@@ -209,6 +223,41 @@
 
         .coin-icon:hover { transform: rotate(360deg) scale(1.1); }
         .peso-sign { font-weight: 900; color: #8B4513; font-size: 22px; }
+
+        /* ── ICON ROW ALIGNMENT FIX ── */
+        .icon-row {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            margin-top: 40px;
+            margin-left: 4px;
+        }
+
+        .icon-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .icon-wrap {
+            width: 56px;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .icon-label {
+            font-size: 9px;
+            font-weight: 900;
+            color: #9ca3af;
+            margin-top: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            transition: color 0.2s;
+        }
 
         /* MODALS */
         .modal-box {
@@ -236,7 +285,9 @@
             border-radius: 15px 15px 15px 2px;
             font-size: 11px;
             font-weight: 800;
+            display: inline-block;
             animation: blinker 1.5s linear infinite;
+            margin-bottom: 16px;
         }
 
         @keyframes blinker { 50% { opacity: 0.3; } }
@@ -314,10 +365,12 @@
                         </div>
                     </div>
 
-                    <!-- ICONS -->
-                    <div class="flex items-center gap-8 mt-10 ml-1">
-                        <div onclick="openModal('prospectingModal')" class="flex flex-col items-start cursor-pointer group">
-                            <div class="relative w-16 h-16 flex items-center justify-center">
+                    <!-- ICONS — fixed alignment -->
+                    <div class="icon-row">
+
+                        <!-- Prospecting -->
+                        <div class="icon-item group" onclick="openModal('prospectingModal')">
+                            <div class="icon-wrap">
                                 <div class="paper-bg">
                                     <div class="paper-line w-6"></div>
                                     <div class="paper-line w-4"></div>
@@ -328,12 +381,19 @@
                                     <div class="handle"></div>
                                 </div>
                             </div>
-                            <p class="text-[9px] font-black text-gray-400 mt-2 uppercase tracking-widest group-hover:text-green-500">Prospecting</p>
+                            <p class="icon-label group-hover:text-green-500">Prospecting</p>
                         </div>
-                        <div onclick="openModal('dealsModal')" class="flex flex-col items-center cursor-pointer group">
-                            <div class="coin-icon"><span class="peso-sign">&#8369;</span></div>
-                            <p class="text-[9px] font-black text-gray-400 mt-2 uppercase tracking-widest group-hover:text-yellow-600">Deals</p>
+
+                        <!-- Deals -->
+                        <div class="icon-item group" onclick="openModal('dealsModal')">
+                            <div class="icon-wrap">
+                                <div class="coin-icon">
+                                    <span class="peso-sign">&#8369;</span>
+                                </div>
+                            </div>
+                            <p class="icon-label group-hover:text-yellow-600">Deals</p>
                         </div>
+
                     </div>
 
                     <!-- DIVIDER -->
@@ -387,7 +447,7 @@
                 <h2 class="font-bold text-gray-800 text-lg uppercase tracking-widest">Prospecting</h2>
                 <div class="w-12 h-1 bg-green-500 mx-auto mt-1 rounded-full"></div>
             </div>
-            <div class="thought-bubble uppercase mb-4">New Deals Found</div>
+            <div class="thought-bubble uppercase">New Deals Found</div>
             <div class="max-h-[300px] overflow-y-auto pr-1 space-y-3">
                 <div class="glass-oblong">
                     <p class="font-bold text-gray-700">Project: Sari-Sari Store Expansion</p>
@@ -412,12 +472,12 @@
     <div id="dealsModal" class="fixed inset-0 z-[100] hidden bg-black/50 backdrop-blur-sm items-center justify-center p-5">
         <div class="modal-box">
             <span class="absolute right-6 top-6 text-2xl text-gray-300 cursor-pointer" onclick="closeModal('dealsModal')">&times;</span>
-            <div class="text-center mb-4">
+            <div class="text-center mb-6">
                 <h2 class="font-bold text-gray-800 text-lg uppercase tracking-widest">My Deals</h2>
-                <div class="thin-gray-line mt-2"></div>
+                <div class="w-12 h-1 bg-yellow-400 mx-auto mt-1 rounded-full"></div>
             </div>
-            <p class="text-[10px] font-bold text-gray-400 mb-4 uppercase">Active Deals</p>
-            <div class="max-h-[280px] overflow-y-auto px-1 space-y-3">
+            <div class="thought-bubble uppercase" style="background: #FBBC05;">Active Deals</div>
+            <div class="max-h-[300px] overflow-y-auto pr-1 space-y-3">
                 <div class="glass-oblong">
                     <p class="font-bold text-gray-700">Deal #001: Rice Wholesale</p>
                     <p class="text-[10px] text-gray-500">Inventory: 50 Sacks</p>
@@ -500,7 +560,7 @@
         }
     </script>
 
-    <!-- Weather JS (separate file) -->
+    <!-- Weather JS -->
     <script src="js/weather.js"></script>
 
 </body>
