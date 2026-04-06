@@ -7,8 +7,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="cover_weather.css">
-
     <style>
         :root {
             --white: #ffffff;
@@ -23,6 +21,36 @@
         }
 
         body { font-family: 'Inter', sans-serif; background-color: var(--white); min-height: 100vh; display: flex; flex-direction: column; align-items: center; margin: 0; overflow-x: hidden; }
+
+        /* 🌦️ WEATHER SYSTEM COVER */
+        .cover-area { 
+            width: 100%; height: 140px; position: relative; z-index: 1; 
+            background: linear-gradient(180deg, #40C4FF 0%, #B3E5FC 100%); 
+            transition: background 1.5s ease; overflow: hidden;
+            border-bottom: 3px solid var(--white);
+        }
+
+        .lightning-flash { position: absolute; width: 100%; height: 100%; background: white; opacity: 0; z-index: 10; pointer-events: none; }
+        @keyframes flashAnim { 0% { opacity: 0; } 10% { opacity: 0.8; } 15% { opacity: 0; } 20% { opacity: 0.7; } 25% { opacity: 0; } }
+
+        .rain-layer { position: absolute; width: 100%; height: 100%; z-index: 2; display: none; }
+        .rain-layer.active { display: block; }
+        .rain-layer::before {
+            content: ''; position: absolute; width: 100%; height: 100%;
+            background-image: linear-gradient(to bottom, rgba(255,255,255,0.2) 15%, transparent 15%);
+            background-size: 2px 25px; animation: rainDrop 0.15s linear infinite;
+        }
+        @keyframes rainDrop { from { transform: translateY(-25px); } to { transform: translateY(25px); } }
+
+        .vector-cloud {
+            position: absolute; background: var(--white); border-radius: 50px;
+            box-shadow: inset 0 -15px 0 var(--cloud-shadow); animation: vectorMove var(--speed) linear infinite;
+        }
+        .vector-cloud::before, .vector-cloud::after { content: ''; position: absolute; background: inherit; border-radius: 50%; box-shadow: inherit; }
+        .v1 { width: 180px; height: 60px; top: 15%; --speed: 35s; left: -200px; }
+        .v1::before { width: 90px; height: 90px; top: -50px; left: 30px; }
+        .v1::after { width: 70px; height: 70px; top: -30px; right: 20px; }
+        @keyframes vectorMove { from { transform: translateX(-100px); } to { transform: translateX(calc(100vw + 300px)); } }
 
         /* 📱 TABLET LANDSCAPE */
         .mini-tablet { background: #1A1A1A; width: 135px; height: 80px; border-radius: 14px; padding: 5px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); position: relative; z-index: 10; margin-top: -40px; }
@@ -187,6 +215,11 @@
                     <p class="text-[10px] text-gray-500">Location: Minglanilla, Cebu</p>
                     <p class="text-[11px] text-green-600 font-bold mt-1">● Potential Profit: 12% Monthly</p>
                 </div>
+                <div class="glass-oblong">
+                    <p class="font-bold text-gray-700">Project: E-Bike Rental Hub</p>
+                    <p class="text-[10px] text-gray-500">Location: Cebu City (IT Park)</p>
+                    <p class="text-[11px] text-green-600 font-bold mt-1">● Potential Profit: 20% Monthly</p>
+                </div>
             </div>
         </div>
     </div>
@@ -198,18 +231,32 @@
                 <h2 class="font-bold text-gray-800 text-lg uppercase tracking-widest">My Deals</h2>
                 <div class="thin-gray-line mt-2"></div>
             </div>
+            <p class="text-[10px] font-bold text-gray-400 mb-4 uppercase">Active Deals</p>
             <div class="max-h-[280px] overflow-y-auto px-1 space-y-3">
                 <div class="glass-oblong">
                     <p class="font-bold text-gray-700">Deal #001: Rice Wholesale</p>
                     <p class="text-[10px] text-gray-500">Inventory: 50 Sacks</p>
                     <p class="text-[11px] text-blue-600 font-bold mt-1">● View Contract</p>
                 </div>
+                <div class="glass-oblong">
+                    <p class="font-bold text-gray-700">Deal #002: LPG Express</p>
+                    <p class="text-[10px] text-gray-500">Regasco Partner Deal</p>
+                    <p class="text-[11px] text-blue-500 font-bold mt-1">● Verifying Documents</p>
+                </div>
+                <div class="glass-oblong">
+                    <p class="font-bold text-gray-700">Deal #003: GCash Hub</p>
+                    <p class="text-[10px] text-gray-500">Daily Cash-out Service</p>
+                    <p class="text-[11px] text-yellow-600 font-bold mt-1">● Pending Funds</p>
+                </div>
             </div>
+            <button class="w-full mt-6 py-4 rounded-2xl font-black text-[12px] tracking-widest uppercase" 
+                    style="background: #FF3D00; color: white; box-shadow: 0 0 20px rgba(255, 61, 0, 0.4);">
+                ARCHIVES
+            </button>
         </div>
     </div>
 
     <script>
-        // Only UI functions stay here
         function openModal(id) { document.getElementById(id).classList.remove('hidden'); document.getElementById(id).classList.add('flex'); }
         function closeModal(id) { document.getElementById(id).classList.add('hidden'); document.getElementById(id).classList.remove('flex'); }
 
@@ -239,9 +286,42 @@
         }
 
         function confirmPayment() { alert("✅ Payment Successful!"); closeModal('cashinModal'); }
+
+        // 🌦️ WEATHER SYSTEM SYNC
+        async function updateWeather() {
+            const sky = document.getElementById('cebu-sky');
+            const rain = document.getElementById('rain');
+            const lightning = document.getElementById('lightning');
+            
+            const hour = new Date().getHours();
+            let isNight = (hour >= 18 || hour < 5);
+            let isSunset = (hour >= 16 && hour < 18);
+
+            if (isNight) sky.style.background = "linear-gradient(180deg, #0B0E14 0%, #1A237E 100%)";
+            else if (isSunset) sky.style.background = "linear-gradient(180deg, #E64A19 0%, #FFB74D 100%)";
+            else sky.style.background = "linear-gradient(180deg, #40C4FF 0%, #B3E5FC 100%)";
+
+            try {
+                const resp = await fetch('https://api.openweathermap.org/data/2.5/weather?q=Cebu&appid=da0650965e6d628f844b24131df33246');
+                const data = await resp.json();
+                const condition = data.weather[0].main; 
+
+                if (condition === 'Rain' || condition === 'Drizzle' || condition === 'Thunderstorm') {
+                    rain.classList.add('active');
+                    if(condition === 'Thunderstorm') {
+                        setInterval(() => { 
+                            if (Math.random() > 0.8) { 
+                                lightning.style.animation = 'flashAnim 0.4s ease-out'; 
+                                setTimeout(() => lightning.style.animation = '', 400); 
+                            } 
+                        }, 5000);
+                    }
+                }
+            } catch (e) { console.log("Weather Offline"); }
+        }
+        updateWeather();
     </script>
-
-    <script src="weather.js"></script>
-
 </body>
 </html>
+
+ang weather lang ang e tanggal jan,, wag yung sa dashboard. apps, buttons 
