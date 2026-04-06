@@ -9,14 +9,24 @@
     width: 100%; height: 160px; position: relative; z-index: 1;
     border-top: 5px solid white; border-bottom: 5px solid white;
     transition: background 2s ease-in-out; 
+    overflow: hidden; /* Dagdag ito para hindi lumabas ang ulan/ulap sa border */
 }
 
-/* State Classes */
-.cover-area.day { background: var(--sky-day); }
-.cover-area.sunset { background: var(--sky-sunset); }
-.cover-area.night { background: var(--sky-night); }
+/* State Classes - Updated para sa weather.js */
+.sky-day { background: var(--sky-day) !important; }
+.sky-sunset { background: var(--sky-sunset) !important; }
+.sky-night { background: var(--sky-night) !important; }
 
 /* Elements */
-.rain-layer { position: absolute; width: 100%; height: 100%; display: none; z-index: 2; }
-.rain-layer.active { display: block; background-image: linear-gradient(to bottom, rgba(255,255,255,0.2) 15%, transparent 15%); background-size: 2px 25px; animation: rainDrop 0.15s linear infinite; }
+.rain-layer { position: absolute; width: 100%; height: 100%; display: none; z-index: 2; pointer-events: none; }
+.rain-layer.active { display: block; }
+.rain-layer::before {
+    content: ''; position: absolute; width: 100%; height: 100%;
+    background-image: linear-gradient(to bottom, rgba(255,255,255,0.2) 15%, transparent 15%);
+    background-size: 2px 25px; animation: rainDrop 0.15s linear infinite;
+}
 @keyframes rainDrop { from { transform: translateY(-25px); } to { transform: translateY(25px); } }
+
+/* Dagdag natin ang Lightning Flash effect para sa kidlat */
+.lightning-flash { position: absolute; width: 100%; height: 100%; background: white; opacity: 0; z-index: 10; pointer-events: none; }
+@keyframes flashAnim { 0% { opacity: 0; } 10% { opacity: 0.8; } 15% { opacity: 0; } 20% { opacity: 0.7; } 25% { opacity: 0; } }
