@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IponHub - Ultimate 4D Cebu OS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&family=Inter:wght@500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --white: #ffffff;
+            --neon-green: #39FF14;
+            --brand-green: #2E7D32;
+            --logo-red: #EA4335;
+            --logo-yellow: #FBBC05;
+            --logo-blue: #4285F4;
+            --cloud-shadow: rgba(129, 212, 250, 0.6);
+            /* Dynamic Sky */
+            --sky-top: #40C4FF;
+            --sky-bottom: #B3E5FC;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background-color: #f8f9fa; min-height: 100vh; display: flex; flex-direction: column; align-items: center; overflow-x: hidden; }
+
+        /* 🌦️ COVER AREA */
+        .cover-area {
+            width: 100%; height: 160px; position: relative; z-index: 1;
+            border-top: 5px solid var(--white); border-bottom: 5px solid var(--white);
+            background: linear-gradient(180deg, var(--sky-top) 0%, var(--sky-bottom) 100%);
+            overflow: hidden; transition: all 1.5s ease;
+        }
+
+        /* ⚡ LIGHTNING FLASH */
+        .lightning-flash {
+            position: absolute; width: 100%; height: 100%;
+            background: white; opacity: 0; z-index: 10; pointer-events: none;
+        }
+        @keyframes flashAnim { 
+            0% { opacity: 0; } 10% { opacity: 0.8; } 15% { opacity: 0; } 20% { opacity: 0.7; } 25% { opacity: 0; } 
+        }
+
+        /* 🌧️ RAIN EFFECT */
+        .rain-layer {
+            position: absolute; width: 100%; height: 100%; z-index: 2; display: none;
+        }
+        .rain-layer.active { display: block; }
+        .rain-layer::before {
+            content: ''; position: absolute; width: 100%; height: 100%;
+            background-image: linear-gradient(to bottom, rgba(255,255,255,0.2) 15%, transparent 15%);
+            background-size: 2px 25px; animation: rainDrop 0.15s linear infinite;
+        }
+        @keyframes rainDrop { from { transform: translateY(-25px); } to { transform: translateY(25px); } }
+
+        /* 🎨 CLOUDS */
+        .vector-cloud {
+            position: absolute; background: var(--white); border-radius: 50px;
+            box-shadow: inset 0 -15px 0 var(--cloud-shadow); animation: vectorMove var(--speed) linear infinite;
+        }
+        .vector-cloud::before, .vector-cloud::after { content: ''; position: absolute; background: inherit; border-radius: 50%; box-shadow: inherit; }
+        .v1 { width: 180px; height: 60px; top: 15%; --speed: 35s; left: -200px; }
+        .v1::before { width: 90px; height: 90px; top: -50px; left: 30px; }
+        .v1::after { width: 70px; height: 70px; top: -30px; right: 20px; }
+        @keyframes vectorMove { from { transform: translateX(-100px); } to { transform: translateX(calc(100vw + 300px)); } }
+
+        /* 📱 TABLET & LOGO SHINE */
+        .mini-tablet { background: #1A1A1A; width: 138px; height: 82px; border-radius: 12px; padding: 5px; box-shadow: 0 15px 35px rgba(0,0,0,0.4); display: flex; justify-content: center; align-items: center; position: relative; z-index: 5; margin-top: -41px; }
+        .tablet-screen { background: var(--white); width: 100%; height: 100%; border-radius: 9px; display: flex; justify-content: center; align-items: center; border: 0.5px solid #000; overflow: hidden; position: relative; }
+        .brand-wrapper { position: relative; display: inline-block; }
+        .brand-name { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 25px; letter-spacing: -1.5px; color: var(--brand-green); position: relative; z-index: 1; }
+        .brand-name .h-red { color: var(--logo-red); }
+        .brand-name .u-yellow { color: var(--logo-yellow); }
+        .brand-name .b-blue { color: var(--logo-blue); }
+        .shine-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2; mix-blend-mode: overlay; background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0) 40%, rgba(255,255,255,1) 50%, rgba(255,255,255,0) 60%, rgba(255,255,255,0) 100%); background-size: 200% 100%; animation: brandShine 3s ease-in-out infinite; }
+        @keyframes brandShine { 0% { background-position: 200% 0; } 45% { background-position: -100% 0; } 100% { background-position: -100% 0; } }
+
+        /* 📦 LOGIN FORM */
+        .login-outer-layer { width: 92%; max-width: 360px; margin-top: 40px; margin-bottom: 50px; background: var(--neon-green); padding: 4px; border-radius: 24px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); z-index: 10; }
+        .login-container { background: var(--white); border-radius: 20px; overflow: hidden; }
+        .form-content { padding: 40px 30px 30px 30px; }
+        .input-group { margin-bottom: 15px; }
+        .input-group label { display: block; font-size: 10px; font-weight: 700; margin-bottom: 8px; text-transform: uppercase; color: #95A5A6; }
+        .form-control { width: 100%; padding: 14px; border: 1.5px solid #E5E7EB; border-radius: 12px; background-color: #F9FAFB; font-size: 14px; outline: none; }
+        .forgot-link { display: block; text-align: right; font-size: 12px; color: var(--brand-green); text-decoration: none; font-weight: 600; margin-top: -5px; margin-bottom: 20px; }
+        .btn-login { width: 100%; padding: 16px; background-color: var(--brand-green); color: white; border: none; border-radius: 12px; font-size: 16px; font-family: 'Montserrat', sans-serif; font-weight: 700; cursor: pointer; }
+        .form-footer { text-align: center; padding: 25px; font-size: 13px; background: #F9F9F9; border-top: 1px solid #EEE; }
+        .form-footer a { color: var(--brand-green); text-decoration: none; font-weight: 700; }
+    </style>
+</head>
+<body>
+
+    <div class="cover-area" id="cebu-sky">
+        <div class="lightning-flash" id="lightning"></div>
+        <div class="rain-layer" id="rain"></div>
+        <div id="cloud-container">
+            <div class="vector-cloud v1"></div>
+            <div class="vector-cloud v1" style="animation-delay: -15s; top: 35%; opacity: 0.7;"></div>
+        </div>
+    </div>
+
+    <div class="mini-tablet">
+        <div class="tablet-screen">
+            <div class="brand-wrapper">
+                <div class="brand-name">Ipon<span class="h-red">H</span><span class="u-yellow">u</span><span class="b-blue">b</span></div>
+                <div class="shine-overlay"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="login-outer-layer">
+        <div class="login-container">
+            <div class="form-content">
+                <form>
+                    <div class="input-group">
+                        <label>Email Address</label>
+                        <input type="email" class="form-control" placeholder="example@gmail.com" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Password</label>
+                        <input type="password" class="form-control" placeholder="••••••••" required>
+                    </div>
+                    <a href="frontend/forgot_pw" class="forgot-link">Forgot Password?</a>
+                    <button type="submit" class="btn-login">LOGIN ✨</button>
+                </form>
+            </div>
+            <div class="form-footer">Don't have an account? <a href="frontend/register.html">Register here</a></div>
+        </div>
+    </div>
+
+    <script>
+        async function updateWeatherEngine() {
+            const sky = document.getElementById('cebu-sky');
+            const rain = document.getElementById('rain');
+            const lightning = document.getElementById('lightning');
+            
+            try {
+                // Fetch Cebu Weather
+                const resp = await fetch('https://api.openweathermap.org/data/2.5/weather?q=Cebu&appid=da0650965e6d628f844b24131df33246');
+                const data = await resp.json();
+                const condition = data.weather[0].main; 
+                const hour = new Date().getHours();
+
+                let isNight = (hour >= 18 || hour < 5);
+                let isSunset = (hour >= 16 && hour < 18);
+                
+                // --- SKY LOGIC ---
+                if (isNight) {
+                    sky.style.background = "linear-gradient(180deg, #0B0E14 0%, #1A237E 100%)";
+                    document.documentElement.style.setProperty('--cloud-shadow', 'rgba(0,0,0,0.4)');
+                } else if (isSunset) {
+                    sky.style.background = "linear-gradient(180deg, #E64A19 0%, #FFB74D 100%)";
+                    document.documentElement.style.setProperty('--cloud-shadow', 'rgba(230,74,25,0.4)');
+                } else {
+                    sky.style.background = "linear-gradient(180deg, #40C4FF 0%, #B3E5FC 100%)";
+                    document.documentElement.style.setProperty('--cloud-shadow', 'rgba(129, 212, 250, 0.6)');
+                }
+
+                // --- WEATHER LOGIC ---
+                if (condition === 'Rain' || condition === 'Drizzle') {
+                    rain.classList.add('active');
+                } else if (condition === 'Thunderstorm') {
+                    rain.classList.add('active');
+                    // Random Lightning Trigger
+                    setInterval(() => {
+                        if (Math.random() > 0.7) {
+                            lightning.style.animation = 'flashAnim 0.5s ease-out';
+                            setTimeout(() => lightning.style.animation = '', 500);
+                        }
+                    }, 4000);
+                } else {
+                    rain.classList.remove('active');
+                }
+
+                // --- CLOUD DENSITY ---
+                if (condition === 'Clouds') {
+                    document.querySelectorAll('.vector-cloud').forEach(c => c.style.opacity = "1");
+                }
+
+            } catch (e) { console.log("Cebu OS: Syncing Time Only"); }
+        }
+
+        updateWeatherEngine();
+        setInterval(updateWeatherEngine, 600000); // Check every 10 mins
+    </script>
+</body>
+</html>
