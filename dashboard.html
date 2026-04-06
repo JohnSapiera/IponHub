@@ -8,16 +8,30 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="style/dashboard/style.css">
+    <link rel="stylesheet" href="dashboard.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'logo-red': '#FF3B30',
+                        'logo-yellow': '#FFCC00',
+                        'logo-blue': '#007AFF',
+                    }
+                }
+            }
+        }
+    </script>
 </head>
-<body>
+<body class="bg-gray-100 font-['Inter']">
 
     <div class="cover-area" id="cebu-sky"></div>
 
     <div class="mini-tablet">
         <div class="tablet-screen">
             <div class="brand-name">
-                Ipon<span style="color:var(--logo-red)">H</span><span style="color:var(--logo-yellow)">u</span><span style="color:var(--logo-blue)">b</span>
+                Ipon<span style="color:var(--logo-red, #FF3B30)">H</span><span style="color:var(--logo-yellow, #FFCC00)">u</span><span style="color:var(--logo-blue, #007AFF)">b</span>
             </div>
         </div>
     </div>
@@ -73,7 +87,7 @@
         </div>
     </div>
 
-    <div id="cashinModal">
+    <div id="cashinModal" class="modal-hidden">
         <div class="modal-box">
             <span class="absolute right-6 top-6 text-2xl text-gray-300 cursor-pointer" onclick="closeModal('cashinModal')">&times;</span>
             <h2 class="text-center font-black text-gray-800 mb-5 tracking-tight uppercase">GCash Cash In</h2>
@@ -99,7 +113,7 @@
         </div>
     </div>
 
-    <div id="prospectingModal">
+    <div id="prospectingModal" class="modal-hidden">
         <div class="modal-box">
             <span class="absolute right-6 top-6 text-2xl text-gray-300 cursor-pointer" onclick="closeModal('prospectingModal')">&times;</span>
             <div class="text-center mb-6">
@@ -108,13 +122,13 @@
             </div>
             <div class="max-h-[300px] overflow-y-auto pr-1">
                 <div class="glass-oblong">
-                    <p class="deal-title">Project: Sari-Sari Store Expansion</p>
-                    <p class="deal-status">● Potential Profit: 15% Monthly</p>
+                    <p class="deal-title text-sm font-bold">Project: Sari-Sari Store Expansion</p>
+                    <p class="deal-status text-[10px] text-green-600 font-bold uppercase mt-1">● Potential Profit: 15% Monthly</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="js/dashboard/script.js"></script>
+    <script src="dashboard.js"></script>
 </body>
 </html>
