@@ -30,3 +30,42 @@
 /* Dagdag natin ang Lightning Flash effect para sa kidlat */
 .lightning-flash { position: absolute; width: 100%; height: 100%; background: white; opacity: 0; z-index: 10; pointer-events: none; }
 @keyframes flashAnim { 0% { opacity: 0; } 10% { opacity: 0.8; } 15% { opacity: 0; } 20% { opacity: 0.7; } 25% { opacity: 0; } }
+
+/* --- CLOUD SYSTEM --- */
+.vector-cloud {
+    position: absolute; 
+    background: white; 
+    border-radius: 50px;
+    box-shadow: inset 0 -15px 0 rgba(129, 212, 250, 0.6); 
+    animation: vectorMove var(--speed) linear infinite;
+    z-index: 3;
+}
+
+.vector-cloud::before, .vector-cloud::after { 
+    content: ''; 
+    position: absolute; 
+    background: inherit; 
+    border-radius: 50%; 
+    box-shadow: inherit; 
+}
+
+/* Cloud Shape 1 */
+.v1 { width: 180px; height: 60px; top: 15%; --speed: 35s; left: -250px; }
+.v1::before { width: 90px; height: 90px; top: -50px; left: 30px; }
+.v1::after { width: 70px; height: 70px; top: -30px; right: 20px; }
+
+/* Cloud Animation */
+@keyframes vectorMove { 
+    from { transform: translateX(-100px); } 
+    to { transform: translateX(calc(100vw + 350px)); } 
+}
+
+/* Cloud Container Fix */
+#cloud-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
