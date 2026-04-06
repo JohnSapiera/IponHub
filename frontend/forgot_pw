@@ -137,7 +137,7 @@
             </div>
 
             <div class="form-footer">
-                <a href="frontend/index.html">Return to Login</a>
+                <a href="frontend/login.html">Return to Login</a>
             </div>
         </div>
     </div>
@@ -208,7 +208,7 @@
             const cNPass = document.getElementById('c-n-pass').value;
             if (nPass !== cNPass) { alert("Verification failed. Passwords do not match."); return; }
             alert("Security credentials updated. Redirecting to terminal...");
-            window.location.href = "index.html";
+            window.location.href = "login.html";
         };
 
         window.onclick = (event) => { if (event.target == pwModal) pwModal.style.display = "none"; }
