@@ -1,0 +1,90 @@
+/* ============================================
+   cover_weather.css
+   IponHub — Weather Cover & Cloud Styles
+   ============================================ */
+
+/* WEATHER SYSTEM COVER */
+.cover-area {
+    width: 100%;
+    height: 140px;
+    position: relative;
+    z-index: 1;
+    background: linear-gradient(180deg, #40C4FF 0%, #B3E5FC 100%);
+    transition: background 1.5s ease;
+    overflow: hidden;
+    border-bottom: 3px solid var(--white);
+}
+
+/* LIGHTNING */
+.lightning-flash {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: white;
+    opacity: 0;
+    z-index: 10;
+    pointer-events: none;
+}
+
+@keyframes flashAnim {
+    0%  { opacity: 0; }
+    10% { opacity: 0.8; }
+    15% { opacity: 0; }
+    20% { opacity: 0.7; }
+    25% { opacity: 0; }
+}
+
+/* RAIN */
+.rain-layer {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    display: none;
+}
+
+.rain-layer.active {
+    display: block;
+}
+
+.rain-layer::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(to bottom, rgba(255,255,255,0.2) 15%, transparent 15%);
+    background-size: 2px 25px;
+    animation: rainDrop 0.15s linear infinite;
+}
+
+@keyframes rainDrop {
+    from { transform: translateY(-25px); }
+    to   { transform: translateY(25px); }
+}
+
+/* CLOUDS */
+.vector-cloud {
+    position: absolute;
+    background: var(--white);
+    border-radius: 50px;
+    box-shadow: inset 0 -15px 0 var(--cloud-shadow);
+    animation: vectorMove var(--speed) linear infinite;
+}
+
+.vector-cloud::before,
+.vector-cloud::after {
+    content: '';
+    position: absolute;
+    background: inherit;
+    border-radius: 50%;
+    box-shadow: inherit;
+}
+
+.v1            { width: 180px; height: 60px; top: 15%; --speed: 35s; left: -200px; }
+.v1::before    { width: 90px;  height: 90px; top: -50px; left: 30px; }
+.v1::after     { width: 70px;  height: 70px; top: -30px; right: 20px; }
+
+@keyframes vectorMove {
+    from { transform: translateX(-100px); }
+    to   { transform: translateX(calc(100vw + 300px)); }
+}
