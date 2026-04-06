@@ -9,29 +9,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="dashboard.css">
-
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'logo-red': '#FF3B30',
-                        'logo-yellow': '#FFCC00',
-                        'logo-blue': '#007AFF',
-                    }
-                }
-            }
-        }
-    </script>
 </head>
-<body class="bg-gray-100 font-['Inter']">
+<body>
 
     <div class="cover-area" id="cebu-sky"></div>
 
     <div class="mini-tablet">
         <div class="tablet-screen">
             <div class="brand-name">
-                Ipon<span style="color:var(--logo-red, #FF3B30)">H</span><span style="color:var(--logo-yellow, #FFCC00)">u</span><span style="color:var(--logo-blue, #007AFF)">b</span>
+                Ipon<span style="color:var(--logo-red)">H</span><span style="color:var(--logo-yellow)">u</span><span style="color:var(--logo-blue)">b</span>
             </div>
         </div>
     </div>
@@ -60,7 +46,7 @@
 
                     <div onclick="openModal('prospectingModal')" class="scan-group flex flex-col items-start group cursor-pointer mt-8 ml-2">
                         <div class="relative w-16 h-16 flex items-center justify-center">
-                            <div class="paper-bg" style="width: 35px; height: 45px;">
+                            <div class="paper-bg">
                                 <div class="paper-line w-6"></div>
                                 <div class="paper-line w-4"></div>
                                 <div class="paper-line w-7"></div>
@@ -87,7 +73,7 @@
         </div>
     </div>
 
-    <div id="cashinModal" class="modal-hidden">
+    <div id="cashinModal">
         <div class="modal-box">
             <span class="absolute right-6 top-6 text-2xl text-gray-300 cursor-pointer" onclick="closeModal('cashinModal')">&times;</span>
             <h2 class="text-center font-black text-gray-800 mb-5 tracking-tight uppercase">GCash Cash In</h2>
@@ -107,13 +93,14 @@
                     <div id="bar1" class="bar"></div>
                     <div id="bar2" class="bar"></div>
                     <div id="bar3" class="bar"></div>
+                    <span id="stepText" class="text-[10px] font-black text-gray-300 ml-2">0/3</span>
                 </div>
                 <button id="submitBtn" class="btn-submit" onclick="confirmPayment()">SUBMIT</button>
             </div>
         </div>
     </div>
 
-    <div id="prospectingModal" class="modal-hidden">
+    <div id="prospectingModal">
         <div class="modal-box">
             <span class="absolute right-6 top-6 text-2xl text-gray-300 cursor-pointer" onclick="closeModal('prospectingModal')">&times;</span>
             <div class="text-center mb-6">
@@ -122,8 +109,12 @@
             </div>
             <div class="max-h-[300px] overflow-y-auto pr-1">
                 <div class="glass-oblong">
-                    <p class="deal-title text-sm font-bold">Project: Sari-Sari Store Expansion</p>
-                    <p class="deal-status text-[10px] text-green-600 font-bold uppercase mt-1">● Potential Profit: 15% Monthly</p>
+                    <p class="deal-title">Project: Sari-Sari Store Expansion</p>
+                    <p class="deal-status">● Potential Profit: 15% Monthly</p>
+                </div>
+                <div class="glass-oblong">
+                    <p class="deal-title">Real Estate: Low-Cost Housing</p>
+                    <p class="deal-status" style="color:var(--logo-blue)">● Reviewing Documents</p>
                 </div>
             </div>
         </div>
